@@ -1,3 +1,5 @@
+import json
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -20,3 +22,5 @@ for i in range(0, len(heroe_div), 1):
     heroes[heroe_name]['role'] = heroe_role
 
 print(heroes)
+with open('../results/heroes.json', 'w') as f:
+    json.dump(heroes, f, indent=4)

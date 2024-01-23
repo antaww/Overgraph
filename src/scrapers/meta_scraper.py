@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import json
 
 url = 'https://www.overbuff.com/meta?platform=pc&gameMode=competitive'
 
@@ -23,4 +24,7 @@ for i in range(0, len(titles), 1):
         meta[title][hero] = percentage
 
     print(meta)
+    with open('../results/meta.json', 'w') as f:
+        json.dump(meta, f, indent=4)
     meta = {}
+
