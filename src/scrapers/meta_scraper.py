@@ -23,8 +23,7 @@ for i in range(0, len(titles), 1):
         percentage = percentages[j].find('span').get_text(strip=True)
         meta[title][hero] = percentage
 
-    print(meta)
-    with open('../results/meta.json', 'w') as f:
-        json.dump(meta, f, indent=4)
-    meta = {}
+print(meta)
+with open('../results/meta.json', 'w') as f:
+    json.dump(meta, f, indent=4)
 

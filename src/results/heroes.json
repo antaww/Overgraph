@@ -1,119 +1,736 @@
 {
-    "Ana": {
-        "role": "Support"
+    "ana": {
+        "role": "Support",
+        "stats": {
+            "KDA Ratio": "4.05",
+            "Pick Rate": "7.89%",
+            "Win Rate": "49.59%",
+            "Eliminations": "9.28/ 10min",
+            "Objective Kills": "3.84/ 10min",
+            "Objective Time": "00:58/ 10min",
+            "Damage": "2,773/ 10min",
+            "Healing": "7,779/ 10min",
+            "Deaths": "6.11/ 10min",
+            "Scoped Accuracy": "57%",
+            "Biotic Grenade Kills": "4.48/ 10min",
+            "Enemies Slept": "5.03/ 10min",
+            "Healing Amplified": "406.31/ 10min",
+            "Nano Boost Assists": "2.80/ 10min"
+        }
     },
-    "Mercy": {
-        "role": "Support"
+    "mercy": {
+        "role": "Support",
+        "stats": {
+            "KDA Ratio": "4.09",
+            "Pick Rate": "5.91%",
+            "Win Rate": "52.16%",
+            "Eliminations": "2.04/ 10min",
+            "Objective Kills": "0.81/ 10min",
+            "Objective Time": "00:47/ 10min",
+            "Damage": "376/ 10min",
+            "Healing": "8,917/ 10min",
+            "Deaths": "5.92/ 10min",
+            "Blaster Kills": "2.02/ 10min",
+            "Damage Amplified": "942.57/ 10min",
+            "Players Resurrected": "4.38/ 10min"
+        }
     },
-    "Kiriko": {
-        "role": "Support"
+    "kiriko": {
+        "role": "Support",
+        "stats": {
+            "KDA Ratio": "4.40",
+            "Pick Rate": "6.10%",
+            "Win Rate": "48.94%",
+            "Eliminations": "8.85/ 10min",
+            "Objective Kills": "3.69/ 10min",
+            "Objective Time": "01:05/ 10min",
+            "Damage": "2,835/ 10min",
+            "Healing": "8,516/ 10min",
+            "Deaths": "6.04/ 10min",
+            "Weapon Accuracy": "30%",
+            "Crit Accuracy": "15%",
+            "Kunai Kills": "8.80/ 10min",
+            "Effects Cleansed": "5.31/ 10min",
+            "Kitsune Rush Assists": "18.90/ 10min"
+        }
     },
-    "Genji": {
-        "role": "Damage"
+    "genji": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.37",
+            "Pick Rate": "3.59%",
+            "Win Rate": "52.01%",
+            "Eliminations": "17.05/ 10min",
+            "Objective Kills": "4.76/ 10min",
+            "Objective Time": "01:01/ 10min",
+            "Damage": "7,232/ 10min",
+            "Deaths": "8.00/ 10min",
+            "Final Blows": "9.26/ 10min",
+            "Solo Kills": "1.55/ 10min",
+            "Weapon Accuracy": "27%",
+            "Swift Strike Resets": "15.15/ 10min",
+            "Damage Reflected": "1,758.91/ 10min",
+            "Ultimates Reflected": "0.11/ 10min",
+            "Dragonblade Kills": "3.29/ 10min"
+        }
     },
-    "Soldier: 76": {
-        "role": "Damage"
+    "soldier-76": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.90",
+            "Pick Rate": "5.69%",
+            "Win Rate": "51.75%",
+            "Eliminations": "18.64/ 10min",
+            "Objective Kills": "6.84/ 10min",
+            "Objective Time": "00:48/ 10min",
+            "Damage": "9,255/ 10min",
+            "Healing": "1,465/ 10min",
+            "Deaths": "7.71/ 10min",
+            "Final Blows": "9.55/ 10min",
+            "Solo Kills": "1.55/ 10min",
+            "Weapon Accuracy": "34%",
+            "Crit Accuracy": "7%",
+            "Helix Rocket Accuracy": "56%",
+            "Long Range Kills": "1.43/ 10min",
+            "Helix Rocket Kills": "7.08/ 10min",
+            "Tactical Visor Kills": "3.02/ 10min"
+        }
     },
-    "Moira": {
-        "role": "Support"
+    "moira": {
+        "role": "Support",
+        "stats": {
+            "KDA Ratio": "5.95",
+            "Pick Rate": "4.32%",
+            "Win Rate": "50.20%",
+            "Eliminations": "17.42/ 10min",
+            "Objective Kills": "7.76/ 10min",
+            "Objective Time": "01:19/ 10min",
+            "Damage": "5,334/ 10min",
+            "Healing": "9,315/ 10min",
+            "Deaths": "6.17/ 10min",
+            "Secondary Accuracy": "50%",
+            "Biotic Orb Kills": "8.48/ 10min",
+            "Ally Coalescence Efficiency": "44%",
+            "Enemy Coalescence Efficiency": "64%",
+            "Coalescence Kills": "3.80/ 10min"
+        }
     },
-    "Hanzo": {
-        "role": "Damage"
+    "hanzo": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.89",
+            "Pick Rate": "2.87%",
+            "Win Rate": "49.13%",
+            "Eliminations": "15.51/ 10min",
+            "Objective Kills": "5.25/ 10min",
+            "Objective Time": "00:47/ 10min",
+            "Damage": "7,348/ 10min",
+            "Deaths": "7.60/ 10min",
+            "Final Blows": "9.81/ 10min",
+            "Solo Kills": "2.32/ 10min",
+            "Weapon Accuracy": "29%",
+            "Crit Accuracy": "12%",
+            "Long Range Kills": "2.42/ 10min",
+            "Storm Arrow Kills": "5.01/ 10min",
+            "Recon Assists": "3.54/ 10min",
+            "Dragonstrike Kills": "1.76/ 10min"
+        }
     },
-    "Cassidy": {
-        "role": "Damage"
+    "cassidy": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.28",
+            "Pick Rate": "2.46%",
+            "Win Rate": "47.36%",
+            "Eliminations": "16.17/ 10min",
+            "Objective Kills": "5.94/ 10min",
+            "Objective Time": "00:49/ 10min",
+            "Damage": "8,062/ 10min",
+            "Deaths": "7.81/ 10min",
+            "Final Blows": "9.25/ 10min",
+            "Solo Kills": "1.61/ 10min",
+            "Weapon Accuracy": "41%",
+            "Crit Accuracy": "8%",
+            "Deadeye Kills": "1.84/ 10min",
+            "Magnetic Grenade Attaches": "47.68",
+            "Magnetic Grenade Kills": "4.01/ 10min"
+        }
     },
-    "Reinhardt": {
-        "role": "Tank"
+    "reinhardt": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "2.77",
+            "Pick Rate": "2.51%",
+            "Win Rate": "52.71%",
+            "Eliminations": "15.42/ 10min",
+            "Objective Kills": "5.46/ 10min",
+            "Objective Time": "01:49/ 10min",
+            "Damage": "7,993/ 10min",
+            "Deaths": "7.03/ 10min",
+            "Objective Contest Time": "01:05/ 10min",
+            "Charge Kills": "3.70/ 10min",
+            "Fire Strike Kills": "6.67/ 10min",
+            "Earthshatter Kills": "3.05/ 10min"
+        }
     },
-    "D.Va": {
-        "role": "Tank"
+    "dva": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "6.39",
+            "Pick Rate": "2.19%",
+            "Win Rate": "51.85%",
+            "Eliminations": "20.24/ 10min",
+            "Objective Kills": "5.72/ 10min",
+            "Objective Time": "01:57/ 10min",
+            "Damage": "8,600/ 10min",
+            "Deaths": "5.18/ 10min",
+            "Objective Contest Time": "01:08/ 10min",
+            "Weapon Accuracy": "26%",
+            "Micro Missile Kills": "8.76%/ 10min",
+            "Call Mech Kills": "2.09/ 10min",
+            "Self-Destruct Kills": "2.11/ 10min"
+        }
     },
-    "Widowmaker": {
-        "role": "Damage"
+    "widowmaker": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.32",
+            "Pick Rate": "1.69%",
+            "Win Rate": "48.58%",
+            "Eliminations": "14.09/ 10min",
+            "Objective Kills": "3.33/ 10min",
+            "Objective Time": "00:23/ 10min",
+            "Damage": "5,614/ 10min",
+            "Deaths": "8.07/ 10min",
+            "Final Blows": "9.40/ 10min",
+            "Solo Kills": "3.43/ 10min",
+            "Scoped Accuracy": "45%",
+            "Scoped Crits": "Unknown",
+            "Recon Assists": "3.15/ 10min",
+            "Venom Mine Kills": "1.17/ 10min"
+        }
     },
-    "Sombra": {
-        "role": "Damage"
+    "sombra": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "3.02",
+            "Pick Rate": "3.11%",
+            "Win Rate": "47.99%",
+            "Eliminations": "15.46/ 10min",
+            "Objective Kills": "5.18/ 10min",
+            "Objective Time": "00:43/ 10min",
+            "Damage": "5,718/ 10min",
+            "Deaths": "7.94/ 10min",
+            "Final Blows": "6.77/ 10min",
+            "Solo Kills": "1.81/ 10min",
+            "Weapon Accuracy": "33%",
+            "Enemies Hacked": "25.73/ 10min",
+            "Low Health Teleports": "3.30/ 10min",
+            "EMP Kills": "2.64/ 10min"
+        }
     },
-    "Zenyatta": {
-        "role": "Support"
+    "zenyatta": {
+        "role": "Support",
+        "stats": {
+            "KDA Ratio": "5.05",
+            "Pick Rate": "1.77%",
+            "Win Rate": "51.36%",
+            "Eliminations": "13.23/ 10min",
+            "Objective Kills": "5.42/ 10min",
+            "Objective Time": "01:06/ 10min",
+            "Damage": "5,106/ 10min",
+            "Healing": "6,558/ 10min",
+            "Deaths": "6.85/ 10min",
+            "Weapon Accuracy": "26%",
+            "Charged Volley Accuracy": "22%",
+            "Charged Volley Kills": "5.50/ 10min",
+            "Damage Amplified": "1,223.87/ 10min",
+            "Transcendence Healing": "1,270.63/ 10min"
+        }
     },
-    "L\u00facio": {
-        "role": "Support"
+    "lucio": {
+        "role": "Support",
+        "stats": {
+            "KDA Ratio": "3.85",
+            "Pick Rate": "1.97%",
+            "Win Rate": "53.55%",
+            "Eliminations": "12.25/ 10min",
+            "Objective Kills": "5.28/ 10min",
+            "Objective Time": "01:31/ 10min",
+            "Damage": "3,508/ 10min",
+            "Healing": "6,885/ 10min",
+            "Deaths": "7.10/ 10min",
+            "Weapon Accuracy": "25%",
+            "Crit Accuracy": "9%",
+            "Knockbacks": "29.12/ 10min",
+            "Sound Barriers": "9.81/ 10min"
+        }
     },
-    "Junkrat": {
-        "role": "Damage"
+    "junkrat": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.49",
+            "Pick Rate": "1.78%",
+            "Win Rate": "50.98%",
+            "Eliminations": "15.48/ 10min",
+            "Objective Kills": "5.44/ 10min",
+            "Objective Time": "00:45/ 10min",
+            "Damage": "7,987/ 10min",
+            "Deaths": "8.01/ 10min",
+            "Final Blows": "9.52/ 10min",
+            "Solo Kills": "2.55/ 10min",
+            "Weapon Accuracy": "25%",
+            "Direct Hits": "17",
+            "Concussion Mine Kills": "5.31/ 10min",
+            "Enemies Trapped": "4.84/ 10min",
+            "Rip Tire Kills": "Unknown"
+        }
     },
-    "Baptiste": {
-        "role": "Support"
+    "baptiste": {
+        "role": "Support",
+        "stats": {
+            "KDA Ratio": "4.01",
+            "Pick Rate": "3.43%",
+            "Win Rate": "49.62%",
+            "Eliminations": "10.42/ 10min",
+            "Objective Kills": "4.27/ 10min",
+            "Objective Time": "00:53/ 10min",
+            "Damage": "3,591/ 10min",
+            "Healing": "8,753/ 10min",
+            "Deaths": "6.47/ 10min",
+            "Weapon Accuracy": "31%",
+            "Healing Accuracy": "67.61",
+            "Crit Accuracy": "9%",
+            "Damage Amplified": "532.18/ 10min",
+            "Deaths Prevented": "2.24/ 10min",
+            "Amp Matrix Assists": "1.74/ 10min"
+        }
     },
-    "Ashe": {
-        "role": "Damage"
+    "zarya": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "4.69",
+            "Pick Rate": "2.56%",
+            "Win Rate": "49.25%",
+            "Eliminations": "19.01/ 10min",
+            "Objective Kills": "8.48/ 10min",
+            "Objective Time": "01:59/ 10min",
+            "Damage": "9,718/ 10min",
+            "Deaths": "6.00/ 10min",
+            "Objective Contest Time": "01:11/ 10min",
+            "Primary Accuracy": "45%",
+            "Secondary Accuracy": "40%",
+            "High Energy Kills": "12.68/ 10min",
+            "Average Energy": "39.54%",
+            "Graviton Surge Kills": "3.23/ 10min"
+        }
     },
-    "Zarya": {
-        "role": "Tank"
+    "ashe": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.75",
+            "Pick Rate": "2.37%",
+            "Win Rate": "51.43%",
+            "Eliminations": "16.09/ 10min",
+            "Objective Kills": "5.49/ 10min",
+            "Objective Time": "00:45/ 10min",
+            "Damage": "8,734/ 10min",
+            "Deaths": "7.41/ 10min",
+            "Final Blows": "8.27/ 10min",
+            "Solo Kills": "1.54/ 10min",
+            "Scoped Accuracy": "40%",
+            "Scoped Crits": "Unknown",
+            "Coach Gun Kills": "1.82/ 10min",
+            "Dynamite Kills": "5.06/ 10min",
+            "Bob Kills": "2.54/ 10min"
+        }
     },
-    "Roadhog": {
-        "role": "Tank"
+    "roadhog": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "3.99",
+            "Pick Rate": "1.59%",
+            "Win Rate": "50.11%",
+            "Eliminations": "16.94/ 10min",
+            "Objective Kills": "7.47/ 10min",
+            "Objective Time": "01:53/ 10min",
+            "Damage": "8,768/ 10min",
+            "Self Healing": "6,043.20/ 10min",
+            "Deaths": "6.19/ 10min",
+            "Objective Contest Time": "01:06/ 10min",
+            "Weapon Accuracy": "24%",
+            "Chain Hook Kills": "8.00/ 10min",
+            "Chain Hook Accuracy": "53.02%",
+            "Whole Hog Kills": "2.98/ 10min"
+        }
     },
-    "Tracer": {
-        "role": "Damage"
+    "tracer": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.28",
+            "Pick Rate": "1.55%",
+            "Win Rate": "49.39%",
+            "Eliminations": "16.58/ 10min",
+            "Objective Kills": "6.10/ 10min",
+            "Objective Time": "01:00/ 10min",
+            "Damage": "6,246/ 10min",
+            "Self Healing": "901.72/ 10min",
+            "Deaths": "8.26/ 10min",
+            "Final Blows": "7.29/ 10min",
+            "Solo Kills": "1.67/ 10min",
+            "Weapon Accuracy": "32%",
+            "Crit Accuracy": "8%",
+            "Low Health Recalls": "4.97/ 10min",
+            "Pulse Bombs Stuck": "1.51/ 10min",
+            "Pulse Bomb Kills": "1.82/ 10min"
+        }
     },
-    "Lifeweaver": {
-        "role": "Support"
+    "lifeweaver": {
+        "role": "Support",
+        "stats": {
+            "KDA Ratio": "4.76",
+            "Pick Rate": "2.91%",
+            "Win Rate": "49.02%",
+            "Eliminations": "5.15/ 10min",
+            "Objective Kills": "2.56/ 10min",
+            "Objective Time": "00:58/ 10min",
+            "Damage": "1,303/ 10min",
+            "Healing": "10,093/ 10min",
+            "Deaths": "4.93/ 10min",
+            "Weapon Accuracy": "24%",
+            "Crit Accuracy": "11%",
+            "Life Grip Saves": "1.63/ 10min",
+            "Thorn Valley Kills": "5.14/ 10min"
+        }
     },
-    "Doomfist": {
-        "role": "Tank"
+    "doomfist": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "3.32",
+            "Pick Rate": "2.10%",
+            "Win Rate": "50.72%",
+            "Eliminations": "17.61/ 10min",
+            "Objective Kills": "5.66/ 10min",
+            "Objective Time": "01:27/ 10min",
+            "Damage": "8,194/ 10min",
+            "Deaths": "7.48/ 10min",
+            "Objective Contest Time": "00:55/ 10min",
+            "Weapon Accuracy": "27%",
+            "Rocket Punch Kills": "9.59/ 10min",
+            "Seismic Slam Kills": "9.44/ 10min",
+            "Overhealth": "2,913.55/ 10min",
+            "Meteor Strike Kills": "2.24/ 10min"
+        }
     },
-    "Sigma": {
-        "role": "Tank"
+    "sigma": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "4.54",
+            "Pick Rate": "2.92%",
+            "Win Rate": "53.18%",
+            "Eliminations": "17.55/ 10min",
+            "Objective Kills": "7.54/ 10min",
+            "Objective Time": "02:03/ 10min",
+            "Damage": "9,841/ 10min",
+            "Deaths": "5.15/ 10min",
+            "Objective Contest Time": "01:09/ 10min",
+            "Weapon Accuracy": "52%",
+            "Accretion Kills": "5.03/ 10min",
+            "Overhealth": "1,282.33/ 10min",
+            "Gravitic Flux Kills": "2.49/ 10min"
+        }
     },
-    "Reaper": {
-        "role": "Damage"
+    "reaper": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.80",
+            "Pick Rate": "1.65%",
+            "Win Rate": "51.01%",
+            "Eliminations": "18.85/ 10min",
+            "Objective Kills": "7.12/ 10min",
+            "Objective Time": "01:09/ 10min",
+            "Damage": "8,121/ 10min",
+            "Self Healing": "1,539.72/ 10min",
+            "Deaths": "7.70/ 10min",
+            "Final Blows": "10.13/ 10min",
+            "Solo Kills": "1.92/ 10min",
+            "Weapon Accuracy": "29%",
+            "Crit Accuracy": "10%",
+            "Death Blossom Kills": "4.00/ 10min"
+        }
     },
-    "Sojourn": {
-        "role": "Damage"
+    "sojourn": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.83",
+            "Pick Rate": "2.90%",
+            "Win Rate": "47.97%",
+            "Eliminations": "17.48/ 10min",
+            "Objective Kills": "6.41/ 10min",
+            "Objective Time": "00:50/ 10min",
+            "Damage": "8,452/ 10min",
+            "Deaths": "7.64/ 10min",
+            "Final Blows": "8.45/ 10min",
+            "Solo Kills": "1.24/ 10min",
+            "Weapon Accuracy": "28%",
+            "Charged Shot Accuracy": "51%",
+            "Charged Crit Accuracy": "12%",
+            "Charged Shot Kills": "9.17/ 10min",
+            "Disruptor Shot Kills": "4.57/ 10min",
+            "Overclock Kills": "2.50/ 10min"
+        }
     },
-    "Illari": {
-        "role": "Support"
+    "illari": {
+        "role": "Support",
+        "stats": {
+            "KDA Ratio": "3.20",
+            "Pick Rate": "2.54%",
+            "Win Rate": "52.23%",
+            "Eliminations": "11.51/ 10min",
+            "Objective Kills": "4.49/ 10min",
+            "Objective Time": "00:58/ 10min",
+            "Damage": "4,382/ 10min",
+            "Deaths": "6.21/ 10min",
+            "Final Blows": "4.48/ 10min",
+            "Solo Kills": "0.75/ 10min",
+            "Weapon Accuracy": "46%",
+            "Crit Accuracy": "13%"
+        }
     },
-    "Orisa": {
-        "role": "Tank"
+    "orisa": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "3.75",
+            "Pick Rate": "2.36%",
+            "Win Rate": "47.85%",
+            "Eliminations": "17.85/ 10min",
+            "Objective Kills": "7.74/ 10min",
+            "Objective Time": "01:57/ 10min",
+            "Damage": "10,039/ 10min",
+            "Deaths": "6.76/ 10min",
+            "Objective Contest Time": "01:14/ 10min",
+            "Weapon Accuracy": "31%",
+            "Energy Javelin Kills": "5.91/ 10min",
+            "Javelin Spin Kills": "0.01/ 10min",
+            "Terra Surge Kills": "3.35/ 10min"
+        }
     },
-    "Mei": {
-        "role": "Damage"
+    "mei": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "3.62",
+            "Pick Rate": "2.02%",
+            "Win Rate": "51.96%",
+            "Eliminations": "16.54/ 10min",
+            "Objective Kills": "6.87/ 10min",
+            "Objective Time": "01:25/ 10min",
+            "Damage": "6,915/ 10min",
+            "Self Healing": "1,049.52/ 10min",
+            "Deaths": "6.94/ 10min",
+            "Final Blows": "7.12/ 10min",
+            "Solo Kills": "1.09/ 10min",
+            "Weapon Accuracy": "50%",
+            "Icicle Accuracy": "27%/ 10min",
+            "Icicle Crit Accuracy": "15%/ 10min",
+            "Enemies Frozen": "3.26/ 10min",
+            "Blizzard Kills": "3.39/ 10min"
+        }
     },
-    "Brigitte": {
-        "role": "Support"
+    "brigitte": {
+        "role": "Support",
+        "stats": {
+            "KDA Ratio": "4.79",
+            "Pick Rate": "1.96%",
+            "Win Rate": "54.86%",
+            "Eliminations": "12.57/ 10min",
+            "Objective Kills": "4.65/ 10min",
+            "Objective Time": "01:17/ 10min",
+            "Damage": "3,941/ 10min",
+            "Healing": "8,435/ 10min",
+            "Deaths": "7.20/ 10min",
+            "Overhealth": "661.18/ 10min",
+            "Inspire Uptime": "32"
+        }
     },
-    "Bastion": {
-        "role": "Damage"
+    "bastion": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.87",
+            "Pick Rate": "2.65%",
+            "Win Rate": "50.37%",
+            "Eliminations": "18.59/ 10min",
+            "Objective Kills": "7.50/ 10min",
+            "Objective Time": "00:59/ 10min",
+            "Damage": "10,351/ 10min",
+            "Self Healing": "Unknown",
+            "Deaths": "7.79/ 10min",
+            "Final Blows": "9.41/ 10min",
+            "Solo Kills": "1.13/ 10min",
+            "Weapon Accuracy": "26%",
+            "Recon Kills": "9.68/ 10min",
+            "Assault Kills": "10.57/ 10min",
+            "Tactical Grenade Kills": "5.22/ 10min",
+            "Artillery Kills": "1.66/ 10min"
+        }
     },
-    "Pharah": {
-        "role": "Damage"
+    "pharah": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.80",
+            "Pick Rate": "1.35%",
+            "Win Rate": "52.14%",
+            "Eliminations": "19.22/ 10min",
+            "Objective Kills": "5.90/ 10min",
+            "Objective Time": "00:36/ 10min",
+            "Damage": "8,852/ 10min",
+            "Deaths": "8.43/ 10min",
+            "Final Blows": "11.44/ 10min",
+            "Solo Kills": "2.19/ 10min",
+            "Weapon Accuracy": "46%",
+            "Direct Hits": "16",
+            "Long Range Kills": "1.28/ 10min",
+            "Airtime": "67.05%",
+            "Barrage Kills": "3.44/ 10min"
+        }
     },
-    "Winston": {
-        "role": "Tank"
+    "winston": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "3.61",
+            "Pick Rate": "1.24%",
+            "Win Rate": "46.47%",
+            "Eliminations": "18.31/ 10min",
+            "Objective Kills": "5.91/ 10min",
+            "Objective Time": "01:43/ 10min",
+            "Damage": "7,748/ 10min",
+            "Deaths": "6.91/ 10min",
+            "Objective Contest Time": "00:58/ 10min",
+            "Primary Accuracy": "64%",
+            "Secondary Accuracy": "49%",
+            "Jump Pack Kills": "7.47/ 10min",
+            "Primal Rage Kills": "1.93/ 10min"
+        }
     },
-    "Symmetra": {
-        "role": "Damage"
+    "symmetra": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "3.15",
+            "Pick Rate": "1.06%",
+            "Win Rate": "52.43%",
+            "Eliminations": "17.38/ 10min",
+            "Objective Kills": "7.42/ 10min",
+            "Objective Time": "01:01/ 10min",
+            "Damage": "7,860/ 10min",
+            "Deaths": "7.94/ 10min",
+            "Final Blows": "7.45/ 10min",
+            "Solo Kills": "1.12/ 10min",
+            "Primary Accuracy": "42%",
+            "Secondary Accuracy": "36%",
+            "Average Damage Multiplier": "1.84",
+            "Players Teleported": "20.84/ 10min",
+            "Sentry Turret Kills": "7.90/ 10min"
+        }
     },
-    "Junker Queen": {
-        "role": "Tank"
+    "junker-queen": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "4.81",
+            "Pick Rate": "1.62%",
+            "Win Rate": "53.80%",
+            "Eliminations": "19.79/ 10min",
+            "Objective Kills": "7.59/ 10min",
+            "Objective Time": "01:47/ 10min",
+            "Damage": "9,753/ 10min",
+            "Deaths": "6.25/ 10min",
+            "Objective Contest Time": "01:08/ 10min",
+            "Weapon Accuracy": "36%",
+            "Jagged Blade Accuracy": "35%",
+            "Carnage Kills": "6.99/ 10min",
+            "Wound Uptime": "19%",
+            "Rampage Kills": "3.36/ 10min"
+        }
     },
-    "Echo": {
-        "role": "Damage"
+    "echo": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.57",
+            "Pick Rate": "1.38%",
+            "Win Rate": "50.16%",
+            "Eliminations": "17.09/ 10min",
+            "Objective Kills": "5.53/ 10min",
+            "Objective Time": "00:55/ 10min",
+            "Damage": "8,215/ 10min",
+            "Deaths": "7.85/ 10min",
+            "Final Blows": "9.02/ 10min",
+            "Solo Kills": "1.61/ 10min",
+            "Weapon Accuracy": "25%",
+            "Focusing Beam Accuracy": "38.65%",
+            "Focusing Beam Kills": "6.46/ 10min",
+            "Sticky Bomb Accuracy": "26%",
+            "Sticky Bomb Kills": "8.04/ 10min",
+            "Duplicate Kills": "3.85/ 10min"
+        }
     },
-    "Torbj\u00f6rn": {
-        "role": "Damage"
+    "torbjorn": {
+        "role": "Damage",
+        "stats": {
+            "KDA Ratio": "2.80",
+            "Pick Rate": "1.10%",
+            "Win Rate": "51.13%",
+            "Eliminations": "16.60/ 10min",
+            "Objective Kills": "6.49/ 10min",
+            "Objective Time": "00:45/ 10min",
+            "Damage": "8,987/ 10min",
+            "Deaths": "7.01/ 10min",
+            "Final Blows": "7.80/ 10min",
+            "Solo Kills": "1.41/ 10min",
+            "Weapon Accuracy": "26%",
+            "Crit Accuracy": "8%",
+            "Hammer Kills": "0.83/ 10min",
+            "Turret Kills": "7.31/ 10min",
+            "Molten Core Kills": "2.31/ 10min"
+        }
     },
-    "Wrecking Ball": {
-        "role": "Tank"
+    "wrecking-ball": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "4.23",
+            "Pick Rate": "1.06%",
+            "Win Rate": "50.03%",
+            "Eliminations": "16.15/ 10min",
+            "Objective Kills": "6.71/ 10min",
+            "Objective Time": "02:00/ 10min",
+            "Damage": "7,415/ 10min",
+            "Deaths": "6.40/ 10min",
+            "Objective Contest Time": "01:24/ 10min",
+            "Weapon Accuracy": "34%",
+            "Crit Accuracy": "10%",
+            "Grappling Claw Kills": "6.58/ 10min",
+            "Piledriver Kills": "6.26/ 10min",
+            "Minefield Kills": "Unknown"
+        }
     },
-    "Ramattra": {
-        "role": "Tank"
+    "ramattra": {
+        "role": "Tank",
+        "stats": {
+            "KDA Ratio": "3.78",
+            "Pick Rate": "1.29%",
+            "Win Rate": "52.13%",
+            "Eliminations": "18.88/ 10min",
+            "Objective Kills": "7.83/ 10min",
+            "Objective Time": "01:55/ 10min",
+            "Damage": "9,876/ 10min",
+            "Deaths": "6.43/ 10min",
+            "Objective Contest Time": "01:10/ 10min",
+            "Weapon Accuracy": "25%",
+            "Pummel Accuracy": "64%",
+            "Pummel Kills": "12.51/ 10min",
+            "Ravenous Vortex Kills": "6.16/ 10min",
+            "Annihilation Kills": "4.64/ 10min"
+        }
     },
-    "Mauga": {
-        "role": "Tank"
+    "mauga": {
+        "role": "Tank",
+        "stats": {}
     }
 }
