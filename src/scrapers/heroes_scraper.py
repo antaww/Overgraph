@@ -32,6 +32,7 @@ for i in range(0, len(hero_div), 1):
     handle_hero_name()
     hero_role = hero_div[i].find('div', class_='leading-snug').text
     heroes[hero_name] = {}
+    heroes[hero_name]['name'] = hero_name
     heroes[hero_name]['role'] = hero_role
 
 # heroes stats
