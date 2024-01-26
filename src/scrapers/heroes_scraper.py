@@ -76,5 +76,5 @@ for hero_name in heroes:
                 except AttributeError:
                     print(f'No stats for {hero_name} in {season}')
 
-with open('../results/heroes.json', 'w') as f:
+with open('../datas/heroes.json', 'w') as f:
     json.dump(heroes, f, indent=4)

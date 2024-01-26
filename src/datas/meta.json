@@ -1,0 +1,86 @@
+{
+    "HighestPick Rate": {
+        "Ana": "8.11%",
+        "Soldier: 76": "5.74%",
+        "Kiriko": "5.22%",
+        "Mercy": "4.90%",
+        "Moira": "4.42%"
+    },
+    "HighestWin Rate": {
+        "Soldier: 76": "5.74%",
+        "Kiriko": "5.22%",
+        "Mercy": "4.90%",
+        "Moira": "4.42%",
+        "Brigitte": "54.50%"
+    },
+    "HighestKDA Ratio": {
+        "Kiriko": "5.22%",
+        "Mercy": "4.90%",
+        "Moira": "4.42%",
+        "Brigitte": "54.50%",
+        "Junker Queen": "53.25%"
+    },
+    "MostEliminations": {
+        "Mercy": "4.90%",
+        "Moira": "4.42%",
+        "Brigitte": "54.50%",
+        "Junker Queen": "53.25%",
+        "Reinhardt": "52.97%"
+    },
+    "MostDamage": {
+        "Moira": "4.42%",
+        "Brigitte": "54.50%",
+        "Junker Queen": "53.25%",
+        "Reinhardt": "52.97%",
+        "L\u00facio": "52.93%"
+    },
+    "MostHealing": {
+        "Brigitte": "54.50%",
+        "Junker Queen": "53.25%",
+        "Reinhardt": "52.97%",
+        "L\u00facio": "52.93%",
+        "Sigma": "52.63%"
+    },
+    "MostObjective Kills": {
+        "Junker Queen": "53.25%",
+        "Reinhardt": "52.97%",
+        "L\u00facio": "52.93%",
+        "Sigma": "52.63%",
+        "D.Va": "6.22"
+    },
+    "MostObjective Time": {
+        "Reinhardt": "52.97%",
+        "L\u00facio": "52.93%",
+        "Sigma": "52.63%",
+        "D.Va": "6.22",
+        "Moira": "5.83"
+    },
+    "LeastDeaths": {
+        "L\u00facio": "52.93%",
+        "Sigma": "52.63%",
+        "D.Va": "6.22",
+        "Moira": "5.83",
+        "Zenyatta": "5.16"
+    },
+    "MostSelf Healing": {
+        "Sigma": "52.63%",
+        "D.Va": "6.22",
+        "Moira": "5.83",
+        "Zenyatta": "5.16",
+        "Junker Queen": "4.77"
+    },
+    "MostSolo Kills": {
+        "D.Va": "6.22",
+        "Moira": "5.83",
+        "Zenyatta": "5.16",
+        "Junker Queen": "4.77",
+        "Lifeweaver": "4.63"
+    },
+    "MostFinal Blows": {
+        "Moira": "5.83",
+        "Zenyatta": "5.16",
+        "Junker Queen": "4.77",
+        "Lifeweaver": "4.63",
+        "D.Va": "20.09"
+    }
+}
