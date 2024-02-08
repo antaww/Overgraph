@@ -1,6 +1,4 @@
 import os
-
-import pandas as pd
 import streamlit as st
 
 try:
@@ -8,6 +6,7 @@ try:
     get_heroes_stat = st.session_state.get_heroes_stat
 
     stats_list = df['stat'].unique()
+    # todo: sort the list
     st.subheader('Get a specific stats for every hero')
     # create a dropdown list with every unique 'stat'
     stat = st.selectbox('Select a stat', stats_list)

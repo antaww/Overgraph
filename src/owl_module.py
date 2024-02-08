@@ -84,8 +84,11 @@ def get_heroes_stat(stat: str) -> pd.Series:
 
 # %% owl.ipynb 57
 def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
-    return df[(df['stat'] == stat) & (df['player'] == player)].groupby('hero')['stat_amount'].sum().sort_values(
+    result = df[(df['stat'] == stat) & (df['player'] == player)].groupby('hero')['stat_amount'].sum().sort_values(
         ascending=False)
+    result.name = stat
+    result.index.name = 'Hero'
+    return result
 
 # %% owl.ipynb 59
 def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
