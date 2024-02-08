@@ -17,64 +17,67 @@ path = os.getcwd().split(project_name)[0] + project_name
 owl_path = f'{path}/src/datas/owl'
 
 # %% owl.ipynb 4
+map_stats = pd.read_csv(f'{owl_path}/match_map_stats.csv')
+
+# %% owl.ipynb 6
 df_2018_s1 = pd.read_csv(f'{owl_path}/phs_2018_stage_1.csv')
 
-# %% owl.ipynb 7
+# %% owl.ipynb 9
 df_2018_s2 = pd.read_csv(f'{owl_path}/phs_2018_stage_2.csv')
 
-# %% owl.ipynb 10
+# %% owl.ipynb 12
 df_2018_s3 = pd.read_csv(f'{owl_path}/phs_2018_stage_3.csv')
 
-# %% owl.ipynb 13
+# %% owl.ipynb 15
 df_2018_s4 = pd.read_csv(f'{owl_path}/phs_2018_stage_4.csv')
 
-# %% owl.ipynb 16
+# %% owl.ipynb 18
 df_2018_po = pd.read_csv(f'{owl_path}/phs_2018_playoffs.csv')
 
-# %% owl.ipynb 19
+# %% owl.ipynb 21
 df_2019_s1 = pd.read_csv(f'{owl_path}/phs_2019_stage_1.csv')
 
-# %% owl.ipynb 22
+# %% owl.ipynb 24
 df_2019_s2 = pd.read_csv(f'{owl_path}/phs_2019_stage_2.csv')
 
-# %% owl.ipynb 25
+# %% owl.ipynb 27
 df_2019_s3 = pd.read_csv(f'{owl_path}/phs_2019_stage_3.csv')
 
-# %% owl.ipynb 28
+# %% owl.ipynb 30
 df_2019_s4 = pd.read_csv(f'{owl_path}/phs_2019_stage_4.csv')
 
-# %% owl.ipynb 31
+# %% owl.ipynb 33
 df_2019_po = pd.read_csv(f'{owl_path}/phs_2019_playoffs.csv')
 
-# %% owl.ipynb 34
+# %% owl.ipynb 36
 df_2020_s1 = pd.read_csv(f'{owl_path}/phs_2020_1.csv')
 
-# %% owl.ipynb 37
+# %% owl.ipynb 39
 df_2020_s2 = pd.read_csv(f'{owl_path}/phs_2020_2.csv')
 
-# %% owl.ipynb 40
+# %% owl.ipynb 42
 df_2021 = pd.read_csv(f'{owl_path}/phs_2021_1.csv')
 
-# %% owl.ipynb 43
+# %% owl.ipynb 45
 df_2022 = pd.read_csv(f'{owl_path}/phs_2022.csv')
 
-# %% owl.ipynb 46
+# %% owl.ipynb 48
 df_2023 = pd.read_csv(f'{owl_path}/phs_2023.csv')
 
-# %% owl.ipynb 49
+# %% owl.ipynb 51
 # merge every dataframes in one
 df = pd.concat(
     [df_2018_s1, df_2018_s2, df_2018_s3, df_2018_s4, df_2018_po, df_2019_s1, df_2019_s2, df_2019_s3, df_2019_s4,
      df_2019_po, df_2020_s1, df_2020_s2, df_2021, df_2022, df_2023])
 
-# %% owl.ipynb 52
+# %% owl.ipynb 54
 # replace every 'McCree' in 'hero' column by 'Cassidy' (do not create a new column)
 df.replace({'hero': 'McCree'}, 'Cassidy', inplace=True)
 df.replace({'hero': 'Lucio'}, 'Lúcio', inplace=True)
 df.replace({'hero': 'Torbjorn'}, 'Torbjörn', inplace=True)
 # todo rename every 'old' teams by their 'new' name
 
-# %% owl.ipynb 56
+# %% owl.ipynb 59
 def get_heroes_stat(stat: str) -> pd.Series:
     result = df[df['stat'] == stat].groupby('hero')['stat_amount'].sum().sort_values(ascending=False)
     result.name = stat
@@ -82,7 +85,7 @@ def get_heroes_stat(stat: str) -> pd.Series:
     return result
 
 
-# %% owl.ipynb 58
+# %% owl.ipynb 61
 def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     result = df[(df['stat'] == stat) & (df['player'] == player)].groupby('hero')['stat_amount'].sum().sort_values(
         ascending=False)
@@ -90,7 +93,7 @@ def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     result.index.name = 'Hero'
     return result
 
-# %% owl.ipynb 60
+# %% owl.ipynb 64
 def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     result = df[(df['stat'] == stat) & (df['team'] == team)].groupby('player')['stat_amount'].sum().sort_values(
         ascending=False)
@@ -98,9 +101,8 @@ def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     result.index.name = 'Player'
     return result
 
-# %% owl.ipynb 62
+# %% owl.ipynb 66
 def get_team_scores(team: str, map_type: str = None) -> pd.DataFrame:
-    map_stats = pd.read_csv(f'{owl_path}/match_map_stats.csv')
     # stock every unique game from team (each game as a unique 'match_id'), team name is stocked in 'team_one_name' or 'team_two_name'
     team_games = map_stats[(map_stats['team_one_name'] == team) | (map_stats['team_two_name'] == team)]
     if map_type:  # only 1 row per game
