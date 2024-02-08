@@ -1,3 +1,3 @@
 # Overgraph
 
-- To run local app : `streamlit run src/owl_module.py`
+- To run local app : `streamlit run src/0_🏠_Home.py`
