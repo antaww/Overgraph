@@ -82,7 +82,7 @@ def get_heroes_stat(stat: str) -> pd.Series:
     return result
 
 
-# %% owl.ipynb 57
+# %% owl.ipynb 58
 def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     result = df[(df['stat'] == stat) & (df['player'] == player)].groupby('hero')['stat_amount'].sum().sort_values(
         ascending=False)
@@ -90,12 +90,15 @@ def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     result.index.name = 'Hero'
     return result
 
-# %% owl.ipynb 59
+# %% owl.ipynb 60
 def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
-    return df[(df['stat'] == stat) & (df['team'] == team)].groupby('player')['stat_amount'].sum().sort_values(
+    result = df[(df['stat'] == stat) & (df['team'] == team)].groupby('player')['stat_amount'].sum().sort_values(
         ascending=False)
+    result.name = stat
+    result.index.name = 'Player'
+    return result
 
-# %% owl.ipynb 61
+# %% owl.ipynb 62
 def get_team_scores(team: str, map_type: str = None) -> pd.DataFrame:
     map_stats = pd.read_csv(f'{owl_path}/match_map_stats.csv')
     # stock every unique game from team (each game as a unique 'match_id'), team name is stocked in 'team_one_name' or 'team_two_name'

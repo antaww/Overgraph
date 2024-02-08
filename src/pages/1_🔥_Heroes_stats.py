@@ -7,7 +7,7 @@ try:
 
     stats_list = df['stat'].unique()
     # todo: sort the list
-    st.subheader('Get a specific stats for every hero')
+    st.subheader('Get specific stats for every hero')
     # create a dropdown list with every unique 'stat'
     stat = st.selectbox('Select a stat', stats_list)
     # display the result
