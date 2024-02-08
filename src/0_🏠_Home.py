@@ -1,7 +1,9 @@
 import pandas as pd
 import streamlit as st
-from owl_module import df, get_heroes_stat, get_heroes_stat_by_player, get_players_stat_by_team, get_team_scores
+from owl_module import df, get_heroes_stat, get_heroes_stat_by_player, get_players_stat_by_team, get_team_scores, \
+    map_stats
 
+st.session_state.map_stats = map_stats
 st.session_state.df = df
 st.session_state.get_heroes_stat = get_heroes_stat
 st.session_state.get_heroes_stat_by_player = get_heroes_stat_by_player
