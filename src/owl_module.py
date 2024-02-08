@@ -15,6 +15,7 @@ import os
 project_name = 'Overgraph'
 path = os.getcwd().split(project_name)[0] + project_name
 owl_path = f'{path}/src/datas/owl'
+ 
 
 # %% owl.ipynb 4
 map_stats = pd.read_csv(f'{owl_path}/match_map_stats.csv')
@@ -75,6 +76,7 @@ df = pd.concat(
 df.replace({'hero': 'McCree'}, 'Cassidy', inplace=True)
 df.replace({'hero': 'Lucio'}, 'Lúcio', inplace=True)
 df.replace({'hero': 'Torbjorn'}, 'Torbjörn', inplace=True)
+df = df[df['team'].str.lower() != df['player'].str.lower()]
 # todo rename every 'old' teams by their 'new' name
 
 # %% owl.ipynb 59
