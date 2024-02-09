@@ -1,4 +1,5 @@
 import os
+
 import streamlit as st
 
 try:
@@ -21,6 +22,9 @@ try:
     # display the result
     try:
         st.write(get_team_scores(team, map_type))
+        st.subheader(f'Winrate of {team} against other teams on {map_type + ' maps' if map_type else "all types "
+                                                                                                     "of matches"}')
+        st.bar_chart(get_team_scores(team, map_type).set_index('Opponent')['Winrate'], color='#efcfd0')
     except KeyError:
         st.error('No data available for this team and this map type')
 except AttributeError:
@@ -30,6 +34,3 @@ except AttributeError:
     if st.button('Go to Home'):
         home_path = os.path.join(os.getcwd(), 'src/0_🏠_Home.py')
         st.switch_page(home_path)
-
-
-
