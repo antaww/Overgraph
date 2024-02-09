@@ -72,7 +72,6 @@ df = pd.concat(
      df_2019_po, df_2020_s1, df_2020_s2, df_2021, df_2022, df_2023])
 
 # %% owl.ipynb 54
-# replace every 'McCree' in 'hero' column by 'Cassidy' (do not create a new column)
 df.replace({'hero': 'McCree'}, 'Cassidy', inplace=True)
 df.replace({'hero': 'Lucio'}, 'Lúcio', inplace=True)
 df.replace({'hero': 'Torbjorn'}, 'Torbjörn', inplace=True)
@@ -82,7 +81,6 @@ df.replace({'team': 'Philadelphia Fusion'}, 'Seoul Infernal', inplace=True)
 for col in ['match_winner', 'map_winner', 'map_loser', 'attacker', 'defender', 'team_one_name', 'team_two_name']:
     map_stats.replace({col: 'Paris Eternal'}, 'Vegas Eternal', inplace=True)
     map_stats.replace({col: 'Philadelphia Fusion'}, 'Seoul Infernal', inplace=True)
-# todo rename every 'old' teams by their 'new' name
 
 # %% owl.ipynb 61
 def get_heroes_stat(stat: str) -> pd.Series:
@@ -154,7 +152,7 @@ def get_team_scores(team: str, map_type: str = None) -> pd.DataFrame:
 
         row = pd.DataFrame(
             {'team': team, 'opponent': opponent, 'total_matches': total_matches, 'win': wins, 'loss': losses,
-             'winrate': winrate, 'map_type': map_type,
+             'winrate': winrate*100, 'map_type': map_type,
              'only_matches': not map_type}, index=[0])
         results = pd.concat([results, row])
 

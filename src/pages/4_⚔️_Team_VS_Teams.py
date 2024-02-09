@@ -15,7 +15,10 @@ try:
     map_type = st.selectbox('Select a map (not required)', [''] + list(map_types_list))
     st.markdown('_**Only Matches** column means : if the score is based on the whole match or only the map_')
     # display the result
-    st.write(get_team_scores(team, map_type))
+    try:
+        st.write(get_team_scores(team, map_type))
+    except KeyError:
+        st.error('No data available for this team and this map type')
 except AttributeError:
     # explain that the user goes to the page Heroes without having loaded the data from the Home page
     st.error('You need to load the data from the Home page first !')
