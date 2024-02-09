@@ -77,9 +77,14 @@ df.replace({'hero': 'McCree'}, 'Cassidy', inplace=True)
 df.replace({'hero': 'Lucio'}, 'Lúcio', inplace=True)
 df.replace({'hero': 'Torbjorn'}, 'Torbjörn', inplace=True)
 df = df[df['map_type'].str.lower() != 'UNKNOWN'.lower()]
+df.replace({'team': 'Paris Eternal'}, 'Vegas Eternal', inplace=True)
+df.replace({'team': 'Philadelphia Fusion'}, 'Seoul Infernal', inplace=True)
+for col in ['match_winner', 'map_winner', 'map_loser', 'attacker', 'defender', 'team_one_name', 'team_two_name']:
+    map_stats.replace({col: 'Paris Eternal'}, 'Vegas Eternal', inplace=True)
+    map_stats.replace({col: 'Philadelphia Fusion'}, 'Seoul Infernal', inplace=True)
 # todo rename every 'old' teams by their 'new' name
 
-# %% owl.ipynb 60
+# %% owl.ipynb 61
 def get_heroes_stat(stat: str) -> pd.Series:
     result = df[df['stat'] == stat].groupby('hero')['stat_amount'].sum().sort_values(ascending=False)
     result.name = stat
@@ -87,7 +92,7 @@ def get_heroes_stat(stat: str) -> pd.Series:
     return result
 
 
-# %% owl.ipynb 62
+# %% owl.ipynb 63
 def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     result = df[(df['stat'] == stat) & (df['player'] == player)].groupby('hero')['stat_amount'].sum().sort_values(
         ascending=False)
@@ -95,7 +100,7 @@ def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     result.index.name = 'Hero'
     return result
 
-# %% owl.ipynb 65
+# %% owl.ipynb 66
 def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     result = df[(df['stat'] == stat) & (df['team'] == team)].groupby('player')['stat_amount'].sum().sort_values(
         ascending=False)
@@ -103,7 +108,7 @@ def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     result.index.name = 'Player'
     return result
 
-# %% owl.ipynb 67
+# %% owl.ipynb 68
 def get_team_scores(team: str, map_type: str = None) -> pd.DataFrame:
     # stock every unique game from team (each game as a unique 'match_id'), team name is stocked in 'team_one_name' or 'team_two_name'
     team_games = map_stats[(map_stats['team_one_name'] == team) | (map_stats['team_two_name'] == team)]
