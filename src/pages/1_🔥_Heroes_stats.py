@@ -5,6 +5,10 @@ try:
     df = st.session_state.df
     get_heroes_stat = st.session_state.get_heroes_stat
 
+    st.set_page_config(
+        page_title="Overgraph - Heroes stats",
+        page_icon="🔥",
+    )
     stats_list = df['stat'].unique()
     # todo: sort the list
     st.subheader('Get specific stats for every hero')

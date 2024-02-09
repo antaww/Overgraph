@@ -3,19 +3,21 @@ import streamlit as st
 
 try:
     df = st.session_state.df
-    get_heroes_stat_by_player = st.session_state.get_heroes_stat_by_player
+    get_players_stat = st.session_state.get_players_stat
 
-    players_list = df['player'].unique()
+    st.set_page_config(
+        page_title="Overgraph - Players stats",
+        page_icon="🏅",
+    )
     stats_list = df['stat'].unique()
-
-    st.subheader('Get specific stats for a player')
+    # todo: sort the list
+    st.subheader('Get specific stats for every player')
     # create a dropdown list with every unique 'stat'
-    player = st.selectbox('Select a player', players_list)
     stat = st.selectbox('Select a stat', stats_list)
     # display the result
-    st.write(get_heroes_stat_by_player(stat, player))
+    st.write(get_players_stat(stat))
 except AttributeError:
-    # explain that the user goes to the page Heroes without having loaded the data from the Home page
+    # explain that the user goes to the page Players without having loaded the data from the Home page
     st.error('You need to load the data from the Home page first !')
     # # create a button to redirect the user to the Home page
     if st.button('Go to Home'):

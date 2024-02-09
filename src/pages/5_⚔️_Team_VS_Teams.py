@@ -6,6 +6,10 @@ try:
     df = st.session_state.df
     get_team_scores = st.session_state.get_team_scores
 
+    st.set_page_config(
+        page_title="Overgraph - Team VS Teams",
+        page_icon="⚔️",
+    )
     teams_list = df['team'].unique()
     map_types_list = df['map_type'].str.title().unique()
 

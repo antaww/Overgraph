@@ -5,6 +5,11 @@ try:
     df = st.session_state.df
     get_players_stat_by_team = st.session_state.get_players_stat_by_team
 
+    st.set_page_config(
+        page_title="Overgraph - Players stats by Team",
+        page_icon="💡",
+    )
+
     teams_list = df['team'].unique()
     stats_list = df['stat'].unique()
 
