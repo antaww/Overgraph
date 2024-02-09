@@ -1,11 +1,8 @@
 import os
-
+import altair as alt
 import streamlit as st
 
-st.set_page_config(
-    page_title="Overgraph - Team VS Teams",
-    page_icon="⚔️",
-)
+st.set_page_config(page_title="Overgraph - Team VS Teams", page_icon="⚔️", )
 
 
 def display_page_infos():
@@ -43,7 +40,17 @@ try:
         st.subheader(
             f'Winrate of {team} against other teams on {map_type + ' maps' if map_type else "all types of matches"}')
         try:
-            st.bar_chart(get_team_scores(team, map_type).set_index('Opponent')['Winrate'], color='#efcfd0')
+            chart_datas = get_team_scores(team, map_type).set_index('Opponent')[['Winrate', 'Total Matches']]
+            chart = alt.Chart(chart_datas.reset_index()).mark_bar().encode(
+                x='Opponent',
+                y=alt.Y('Winrate', scale=alt.Scale(domain=(0, 100))),
+                color=alt.Color('Total Matches', scale=alt.Scale(scheme='orangered')),  # https://vega.github.io/vega/docs/schemes/#reference
+                tooltip=['Opponent', 'Winrate', 'Total Matches'],
+            ).properties(
+                height=500
+            ).interactive()
+            st.altair_chart(chart, use_container_width=True)
+
         except KeyError:
             st.error('No data available for this team and this map type')
 except AttributeError:
