@@ -34,7 +34,7 @@ try:
         order = st.radio('', ['Higher', 'Lower'], index=1)
 
         data = get_heroes_stat(stat)
-        data = data.iloc[1:]
+        data = data[data.index != 'All Heroes']
         max_heroes = int(len(data) * max_heroes_percentage / 100)
         if max_heroes == 0:
             max_heroes = 1
