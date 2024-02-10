@@ -1,4 +1,5 @@
 import os
+
 import altair as alt
 import streamlit as st
 
@@ -44,11 +45,12 @@ try:
             chart = alt.Chart(chart_datas.reset_index()).mark_bar().encode(
                 x='Opponent',
                 y=alt.Y('Winrate', scale=alt.Scale(domain=(0, 100))),
-                color=alt.Color('Total Matches', scale=alt.Scale(scheme='orangered')),  # https://vega.github.io/vega/docs/schemes/#reference
+                color=alt.Color('Total Matches', scale=alt.Scale(scheme='orangered')),
+                # https://vega.github.io/vega/docs/schemes/#reference
                 tooltip=['Opponent', 'Winrate', 'Total Matches'],
             ).properties(
                 height=500
-            ).interactive()
+            )
             st.altair_chart(chart, use_container_width=True)
 
         except KeyError:

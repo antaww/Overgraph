@@ -1,10 +1,8 @@
 import os
+import plotly.express as px
 import streamlit as st
 
-st.set_page_config(
-    page_title="Overgraph - Players stats",
-    page_icon="🏅",
-)
+st.set_page_config(page_title="Overgraph - Players stats", page_icon="🏅", )
 
 
 def display_page_infos():
@@ -33,9 +31,11 @@ try:
         max_players_percentage = st.slider('', 1, 100, 50, 1, format='%d %%')
         st.markdown('👀 _Use the slider to select the percentage of players to display_')
         order = st.radio('', ['Higher', 'Lower'], index=1)
-        import plotly.express as px
+
         data = get_players_stat(stat)
         max_players = int(len(data) * max_players_percentage / 100)
+        if max_players == 0:
+            max_players = 1
 
         if order == 'Lower':
             order_label = 'lowest'
