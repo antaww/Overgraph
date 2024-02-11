@@ -16,7 +16,7 @@ import os
 project_name = 'Overgraph'
 path = os.getcwd().split(project_name)[0] + project_name
 owl_path = f'{path}/src/datas/owl'
- 
+
 
 # %% owl.ipynb 4
 map_stats = pd.read_csv(f'{owl_path}/match_map_stats.csv')
@@ -99,14 +99,31 @@ def get_players_stat(stat: str) -> pd.Series:
     return result
 
 # %% owl.ipynb 62
+def avg_stats_per_game(stat: str, player: str) -> pd.DataFrame:
+    player_data = df[(df['stat'] == stat) & (df['player'] == player)]
+    results = pd.DataFrame(columns=['Hero', 'Stat', 'Avg per game'])
+
+    stat_data = player_data[player_data['stat'] == stat]
+    avg_per_game = stat_data.groupby(['hero'])['stat_amount'].mean().reset_index()
+    avg_per_game.columns = ['Hero', 'Avg per game']
+    avg_per_game['Number of game'] = stat_data.groupby(['hero'])['stat_amount'].count().reset_index()['stat_amount']
+    results = pd.concat([results, avg_per_game], ignore_index=True, sort=False)
+
+    return results[['Hero', 'Avg per game', 'Number of game']]
+
+# %% owl.ipynb 63
 def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     result = df[(df['stat'] == stat) & (df['player'] == player)].groupby('hero')['stat_amount'].sum().sort_values(
         ascending=False)
     result.name = stat
     result.index.name = 'Hero'
+    stat_avg = avg_stats_per_game(stat, player)
+    result = result.reset_index().merge(stat_avg, on='Hero', how='left')
+    #reset index
+    result = result.set_index('Hero')
     return result
 
-# %% owl.ipynb 65
+# %% owl.ipynb 66
 def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     result = df[(df['stat'] == stat) & (df['team'] == team)].groupby('player')['stat_amount'].sum().sort_values(
         ascending=False)
@@ -114,7 +131,7 @@ def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     result.index.name = 'Player'
     return result
 
-# %% owl.ipynb 67
+# %% owl.ipynb 68
 def get_team_scores(team: str, map_type: str = None) -> pd.DataFrame:
     # stock every unique game from team (each game as a unique 'match_id'), team name is stocked in 'team_one_name' or 'team_two_name'
     team_games = map_stats[(map_stats['team_one_name'] == team) | (map_stats['team_two_name'] == team)]
@@ -160,13 +177,14 @@ def get_team_scores(team: str, map_type: str = None) -> pd.DataFrame:
 
         row = pd.DataFrame(
             {'team': team, 'opponent': opponent, 'total_matches': total_matches, 'win': wins, 'loss': losses,
-             'winrate': winrate*100, 'map_type': map_type,
+             'winrate': winrate * 100, 'map_type': map_type,
              'only_matches': not map_type}, index=[0])
         results = pd.concat([results, row])
 
     # rename columns
     results.rename(columns={'team': 'Team', 'opponent': 'Opponent', 'total_matches': 'Total Matches', 'win': 'Win',
-                            'loss': 'Loss', 'winrate': 'Winrate', 'map_type': 'Map Type', 'only_matches': 'Only Matches'},
+                            'loss': 'Loss', 'winrate': 'Winrate', 'map_type': 'Map Type',
+                            'only_matches': 'Only Matches'},
                    inplace=True)
 
     # reorder columns
@@ -174,5 +192,5 @@ def get_team_scores(team: str, map_type: str = None) -> pd.DataFrame:
     if not map_type:
         results = results.drop(columns='Map Type')
 
-    results = results.reset_index(drop=True)
+    results = results.set_index('Team')
     return results
