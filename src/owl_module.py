@@ -81,16 +81,15 @@ df.replace({'hero': 'Torbjorn'}, 'Torbjörn', inplace=True)
 df = df[df['map_type'].str.lower() != 'UNKNOWN'.lower()]
 df.replace({'team': 'Paris Eternal'}, 'Vegas Eternal', inplace=True)
 df.replace({'team': 'Philadelphia Fusion'}, 'Seoul Infernal', inplace=True)
-df['start_time'] = df['start_time'].str.replace(' UTC', '')
-df['start_time'] = df['start_time'].apply(lambda x: dparser.parse(x, fuzzy=True))
-# for col in ['match_winner', 'map_winner', 'map_loser', 'attacker', 'defender', 'team_one_name', 'team_two_name']:
-#     map_stats.replace({col: 'Paris Eternal'}, 'Vegas Eternal', inplace=True)
-#     map_stats.replace({col: 'Philadelphia Fusion'}, 'Seoul Infernal', inplace=True)
-# map_stats['round_start_time'] = map_stats['round_start_time'].str.replace(' UTC', '')
-# map_stats['round_end_time'] = map_stats['round_end_time'].str.replace(' UTC', '')
-# map_stats['round_start_time'] = map_stats['round_start_time'].apply(lambda x: dparser.parse(x, fuzzy=True))
-# map_stats['round_end_time'] = map_stats['round_end_time'].apply(lambda x: dparser.parse(x, fuzzy=True))
-# map_stats.to_csv(f'{owl_path}/match_map_stats.csv', index=False)
+
+for col in ['match_winner', 'map_winner', 'map_loser', 'attacker', 'defender', 'team_one_name', 'team_two_name']:
+    map_stats.replace({col: 'Paris Eternal'}, 'Vegas Eternal', inplace=True)
+    map_stats.replace({col: 'Philadelphia Fusion'}, 'Seoul Infernal', inplace=True)
+map_stats['round_start_time'] = map_stats['round_start_time'].str.replace(' UTC', '')
+map_stats['round_end_time'] = map_stats['round_end_time'].str.replace(' UTC', '')
+map_stats['round_start_time'] = map_stats['round_start_time'].apply(lambda x: dparser.parse(x, fuzzy=True))
+map_stats['round_end_time'] = map_stats['round_end_time'].apply(lambda x: dparser.parse(x, fuzzy=True))
+map_stats.to_csv(f'{owl_path}/match_map_stats.csv', index=False)
 
 # %% owl.ipynb 58
 def team_evolution(team: str, stat: str) -> pd.DataFrame:
@@ -101,7 +100,10 @@ def team_evolution(team: str, stat: str) -> pd.DataFrame:
     result = result.to_frame().reset_index().merge(map_stats[['match_id', 'match_winner']], on='match_id')
     result = result.drop_duplicates(subset='match_id')
     result = result.set_index('match_id')
+    result['start_time'] = result['start_time'].str.replace(' UTC', '')
+    result['start_time'] = result['start_time'].apply(lambda x: dparser.parse(x, fuzzy=True))
     result = result.sort_values(by='start_time')
+    
     
     # add a column winrate, that will start from 0%, and will be updated 
     result['winrate'] = 0
