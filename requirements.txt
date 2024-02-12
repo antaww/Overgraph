@@ -6,3 +6,4 @@ nbdev
 streamlit_jupyter
 altair~=5.2.0
 plotly~=5.18.0
+dateutil
