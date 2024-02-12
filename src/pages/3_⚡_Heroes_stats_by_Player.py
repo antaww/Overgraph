@@ -32,7 +32,7 @@ try:
         chart = alt.Chart(avg_stats.reset_index()).mark_bar().encode(
             x='Hero',
             y=alt.Y('Avg per game'),
-            color=alt.Color('Number of game', scale=alt.Scale(scheme='orangered')),
+            color=alt.Color('Number of game', scale=alt.Scale(scheme='greenblue')),
             # https://vega.github.io/vega/docs/schemes/#reference
             tooltip=['Hero', 'Avg per game', 'Number of game'],
         ).properties(
