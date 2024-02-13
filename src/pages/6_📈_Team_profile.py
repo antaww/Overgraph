@@ -1,10 +1,10 @@
 import os
 
-import pandas as pd
-import streamlit as st
-import plotly.express as px
-from plotly.subplots import make_subplots
 import matplotlib.pyplot as plt
+import pandas as pd
+import plotly.express as px
+import streamlit as st
+from plotly.subplots import make_subplots
 
 st.set_page_config(page_title="Overgraph - Team VS Teams", page_icon="⚔️", )
 
@@ -20,28 +20,28 @@ def display_page_infos():
 
 
 def double_y_lines(dataframe: pd.DataFrame, title: str, x: str, y1: str, y2: str,
-                   second_title_condition: bool = False, second_title: str = None,
-                   mode: str = 'lines+markers') -> plt.Figure:
+                   color1: str, color2: str, second_title_condition: bool = False,
+                   second_title: str = None, mode: str = 'lines+markers') -> plt.Figure:
     figure = make_subplots(specs=[[{"secondary_y": True}]])
-    figure.add_trace(px.line(dataframe, x='Start Time', y=stat).data[0])
-    figure.add_trace(px.line(dataframe, x='Start Time', y='Winrate').data[0], secondary_y=True)
+    figure.add_trace(px.line(dataframe, x=x, y=y1).data[0])
+    figure.add_trace(px.line(dataframe, x=x, y=y2).data[0], secondary_y=True)
     # color lines
-    figure.data[0].line.color = 'red'
-    figure.data[1].line.color = 'blue'
+    figure.data[0].line.color = color1
+    figure.data[1].line.color = color2
     # add title
-    if stage:
-        figure.update_layout(title=f'{team}\'s {stat} and winrate over time on {stage}')
+    if second_title_condition:
+        figure.update_layout(title=title)
     else:
-        figure.update_layout(title=f'{team}\'s {stat} and winrate over time on all stages')
+        figure.update_layout(title=second_title)
     # add x axis title
-    figure.update_xaxes(title_text='Date')
+    figure.update_xaxes(title_text=x)
     # add y axis title
-    figure.update_yaxes(title_text=stat, secondary_y=False)
-    figure.update_yaxes(title_text='Winrate', secondary_y=True)
+    figure.update_yaxes(title_text=y1, secondary_y=False)
+    figure.update_yaxes(title_text=y2, secondary_y=True)
     # add point
-    figure.update_traces(mode='lines+markers')
+    figure.update_traces(mode=mode)
     # make x axis start on first value date
-    figure.update_xaxes(range=[dataframe['Start Time'].min(), dataframe['Start Time'].max()])
+    figure.update_xaxes(range=[dataframe[x].min(), dataframe[x].max()])
     return figure
 
 
@@ -72,47 +72,17 @@ try:
         try:
             chart_datas = get_team_profile(team, stat, stage)
             # todo: add mean line for the stat
-            fig = make_subplots(specs=[[{"secondary_y": True}]])
-            fig.add_trace(px.line(chart_datas, x='Start Time', y=stat).data[0])
-            fig.add_trace(px.line(chart_datas, x='Start Time', y='Winrate').data[0], secondary_y=True)
-            # color lines
-            fig.data[0].line.color = 'red'
-            fig.data[1].line.color = 'blue'
-            # add title
-            if stage:
-                fig.update_layout(title=f'{team}\'s {stat} and winrate over time on {stage}')
-            else:
-                fig.update_layout(title=f'{team}\'s {stat} and winrate over time on all stages')
-            # add x axis title
-            fig.update_xaxes(title_text='Date')
-            # add y axis title
-            fig.update_yaxes(title_text=stat, secondary_y=False)
-            fig.update_yaxes(title_text='Winrate', secondary_y=True)
-            # add point
-            fig.update_traces(mode='lines+markers')
-            # make x axis start on first value date
-            fig.update_xaxes(range=[chart_datas['Start Time'].min(), chart_datas['Start Time'].max()])
-            # todo: fig = double_y_lines()
+            fig = double_y_lines(dataframe=chart_datas, title=f'{team}\'s {stat} and winrate over time on all stages',
+                                 x='Start Time', y1=stat, y2='Winrate', color1='red', color2='blue',
+                                 second_title_condition=stage,
+                                 second_title=f'{team}\'s {stat} and winrate over time on {stage}',
+                                 mode='lines+markers')
 
-            # same thing but replace stat with Avg+stat
-            fig2 = make_subplots(specs=[[{"secondary_y": True}]])
-
-            fig2.add_trace(px.line(chart_datas, x='Start Time', y=f'Avg {stat}').data[0])
-            fig2.add_trace(px.line(chart_datas, x='Start Time', y='Winrate').data[0], secondary_y=True)
-
-            fig2.data[0].line.color = 'red'
-            fig2.data[1].line.color = 'blue'
-
-            if stage:
-                fig2.update_layout(title=f'{team}\'s Avg {stat} and winrate over time on {stage}')
-            else:
-                fig2.update_layout(title=f'{team}\'s Avg {stat} and winrate over time on all stages')
-
-            fig2.update_xaxes(title_text='Date')
-            fig2.update_yaxes(title_text=f'Avg {stat}', secondary_y=False)
-            fig2.update_yaxes(title_text='Winrate', secondary_y=True)
-            fig2.update_traces(mode='lines+markers')
-            fig2.update_xaxes(range=[chart_datas['Start Time'].min(), chart_datas['Start Time'].max()])
+            fig2 = double_y_lines(dataframe=chart_datas, title=f'{team}\'s Avg {stat} and winrate over time on all stages',
+                                  x='Start Time', y1=f'Avg {stat}', y2='Winrate', color1='red', color2='blue',
+                                  second_title_condition=stage,
+                                  second_title=f'{team}\'s Avg {stat} and winrate over time on {stage}',
+                                  mode='lines+markers')
             st.plotly_chart(fig)
             st.plotly_chart(fig2)
         except KeyError:
