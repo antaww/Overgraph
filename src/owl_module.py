@@ -4,16 +4,19 @@
 __all__ = ['map_stats', 'df', 'get_team_profile', 'get_heroes_stat', 'get_players_stat', 'get_heroes_stat_by_player',
            'get_players_stat_by_team', 'get_team_scores']
 
-# %% owl.ipynb 2
-import os
-
-import dateutil.parser as dparser
 # %% owl.ipynb 0
 import pandas as pd
+import streamlit as st
+import dateutil.parser as dparser
+from streamlit_jupyter import StreamlitPatcher
+
+# %% owl.ipynb 2
+import os
 
 project_name = 'Overgraph'
 path = os.getcwd().split(project_name)[0] + project_name
 owl_path = f'{path}/src/datas/owl'
+
 
 # %% owl.ipynb 4
 map_stats = pd.read_csv(f'{owl_path}/match_map_stats.csv')
@@ -108,6 +111,7 @@ for stage in stage_2023:
     df.replace({'stage': stage}, f'2023 : {stage}', inplace=True)
 
 
+
 # !!!! to save execution time, match_map_stats.csv cleaned version has been saved
 # !!!! if it's your first run, you must uncomment the following part: 
 # for col in ['match_winner', 'map_winner', 'map_loser', 'attacker', 'defender', 'team_one_name', 'team_two_name']:
@@ -132,55 +136,55 @@ def get_team_profile(team: str, stat: str, stage: str = None) -> pd.DataFrame:
     Returns:
     pd.DataFrame: A DataFrame containing the team profile.
     """
-
+    
     # Filter the DataFrame based on the team, stat, and hero
     result = df[df['team'] == team]
     result = result[result['stat'] == stat]
     result = result[result['hero'] == 'All Heroes']
-
+    
     # If a stage is specified, filter the DataFrame based on the stage
     if stage:
         print('stage filter')
         result = result[result['stage'] == stage]
-
+    
     # Calculate the total stat amount for each match
     stat_result = result.groupby(['match_id'])['stat_amount'].sum()
-
+    
     # Calculate the total stat amount for each match and start time
     total_stat_amount = result.groupby(['match_id', 'start_time'])['stat_amount'].sum()
-
+    
     # Calculate the number of start times for each match
     number_of_start_time_per_match = total_stat_amount.groupby(['match_id']).count()
-
+    
     # Calculate the average stat amount
     avg_stat = total_stat_amount.groupby(['match_id']).sum() / number_of_start_time_per_match
-
+    
     # Add the total and average stat amounts to the DataFrame
     result['stat_match_total'] = result['match_id'].apply(lambda x: stat_result[x])
     result['avg_stat'] = result['match_id'].apply(lambda x: avg_stat[x])
-
+    
     # Replace the stat amount with the total stat amount
     result['stat_amount'] = result['stat_match_total']
     result = result.drop(columns=['stat_match_total'])
-
+    
     # Merge the DataFrame with the map stats DataFrame
     result = result.reset_index().merge(
         map_stats[['match_id', 'match_winner', 'team_one_name', 'team_two_name']], on='match_id')
-
+    
     # Add the opponent team to the DataFrame
     result['opponent'] = result['team_one_name']
     result['opponent'] = result['opponent'].where(result['team_one_name'] != team, result['team_two_name'])
     result = result.drop(columns=['team_one_name', 'team_two_name'])
-
+    
     # Remove duplicate matches
     result = result.drop_duplicates(subset='match_id')
     result = result.set_index('match_id')
-
+    
     # Convert the start time to a datetime object and sort the DataFrame by start time
     result['start_time'] = result['start_time'].str.replace(' UTC', '')
     result['start_time'] = result['start_time'].apply(lambda x: dparser.parse(x, fuzzy=True))
     result = result.sort_values(by='start_time')
-
+    
     # Calculate the win rate for each match
     result['winrate'] = 0
     win = 0
@@ -191,20 +195,18 @@ def get_team_profile(team: str, stat: str, stage: str = None) -> pd.DataFrame:
         else:
             loss += 1
         result.loc[match, 'winrate'] = win / (win + loss) * 100
-
+    
     # Remove unnecessary columns
     result = result.drop(columns=['index', 'stat', 'map_type', 'map', 'player', 'hero', 'team'])
-
+    
     # Rename the columns
     result.rename(
-        columns={'start_time': 'Start Time', 'stat_amount': stat, 'match_winner': 'Match Winner', 'winrate': 'Winrate',
-                 'opponent': 'Opponent', 'stage': 'Stage', 'avg_stat': f'Avg {stat}'},
+        columns={'start_time': 'Start Time', 'stat_amount': stat, 'match_winner': 'Match Winner', 'winrate': 'Winrate', 'opponent': 'Opponent', 'stage': 'Stage', 'avg_stat': f'Avg {stat}'},
         inplace=True)
-
+    
     result.index.name = 'Match ID'
-
+    
     return result
-
 
 # %% owl.ipynb 60
 def get_heroes_stat(stat: str) -> pd.Series:
@@ -221,7 +223,6 @@ def get_players_stat(stat: str) -> pd.Series:
     result.index.name = 'Player'
     return result
 
-
 # %% owl.ipynb 64
 def avg_stats_per_game(stat: str, player: str) -> pd.DataFrame:
     player_data = df[(df['stat'] == stat) & (df['player'] == player)]
@@ -235,7 +236,6 @@ def avg_stats_per_game(stat: str, player: str) -> pd.DataFrame:
 
     return results[['Hero', 'Avg per game', 'Number of game']]
 
-
 # %% owl.ipynb 65
 def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     result = df[(df['stat'] == stat) & (df['player'] == player)].groupby('hero')['stat_amount'].sum().sort_values(
@@ -244,10 +244,9 @@ def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     result.index.name = 'Hero'
     stat_avg = avg_stats_per_game(stat, player)
     result = result.reset_index().merge(stat_avg, on='Hero', how='left')
-    # reset index
+    #reset index
     result = result.set_index('Hero')
     return result
-
 
 # %% owl.ipynb 68
 def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
@@ -257,16 +256,16 @@ def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     result.index.name = 'Player'
     return result
 
-
 # %% owl.ipynb 70
-def get_team_scores(team: str, map_type: str = None) -> pd.DataFrame:
+def get_team_scores(team: str, map_type: str = None, map_name: str = None) -> pd.DataFrame:
     # stock every unique game from team (each game as a unique 'match_id'), team name is stocked in 'team_one_name' or 'team_two_name'
     team_games = map_stats[(map_stats['team_one_name'] == team) | (map_stats['team_two_name'] == team)]
     if map_type:  # only 1 row per game
         # add column 'map_type' from dataframe 'df'
         team_games = team_games.merge(df[['match_id', 'map_type']], on='match_id')
-        print(team_games['map_type'].str.lower().unique())
         team_games = team_games[team_games['map_type'].str.lower() == map_type.lower()]
+        if map_name:  # only 1 row per game
+            team_games = team_games[team_games['map_name'].str.lower() == map_name.lower()]
         # get one row per map
         team_games = team_games.drop_duplicates(subset='round_start_time')
         # do not keep twice same game_number per match_id
@@ -305,19 +304,21 @@ def get_team_scores(team: str, map_type: str = None) -> pd.DataFrame:
         row = pd.DataFrame(
             {'team': team, 'opponent': opponent, 'total_matches': total_matches, 'win': wins, 'loss': losses,
              'winrate': winrate * 100, 'map_type': map_type,
-             'only_matches': not map_type}, index=[0])
+             'only_matches': not map_type, 'map_name': map_name}, index=[0])
         results = pd.concat([results, row])
 
     # rename columns
     results.rename(columns={'team': 'Team', 'opponent': 'Opponent', 'total_matches': 'Total Matches', 'win': 'Win',
                             'loss': 'Loss', 'winrate': 'Winrate', 'map_type': 'Map Type',
-                            'only_matches': 'Only Matches'},
+                            'only_matches': 'Only Matches', 'map_name': 'Map Name'},
                    inplace=True)
 
     # reorder columns
-    results = results[['Team', 'Opponent', 'Total Matches', 'Win', 'Loss', 'Winrate', 'Map Type', 'Only Matches']]
+    results = results[['Team', 'Opponent', 'Total Matches', 'Win', 'Loss', 'Winrate', 'Map Type', 'Map Name', 'Only Matches']]
     if not map_type:
         results = results.drop(columns='Map Type')
+    if not map_name:
+        results = results.drop(columns='Map Name')
 
     results = results.set_index('Team')
     return results

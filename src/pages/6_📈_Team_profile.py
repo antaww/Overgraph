@@ -82,7 +82,7 @@ try:
             st.error('No data available for this team and this stage')
     with viz_tab:
         st.subheader(
-            f'{team}\'s {stat} and winrate over time on {stage if stage else "all stages"}')
+            f'{team}\'s {stat} and winrate analysis')
         try:
             chart_datas = get_team_profile(team, stat, stage)
             # todo: add mean line for the stat

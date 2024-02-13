@@ -23,26 +23,36 @@ try:
 
     teams_list = df['team'].unique()
     map_types_list = df['map_type'].str.title().unique()
+    # get every 'map' where 'map_type' == map_type
 
     display_page_infos()
     # create a dropdown list with every unique 'stat'
     team = st.selectbox('Select a team', teams_list)
-    map_type = st.selectbox('Select a map (not required)', [''] + list(map_types_list))
+    map_type = st.selectbox('Select a map type (not required)', [''] + list(map_types_list))
+    if map_type:
+        map_names_list = df[df['map_type'].str.lower() == map_type.lower()]['map'].unique()
+        map_name = st.selectbox('Select a map (not required)', [''] + list(map_names_list))
     df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
 
     with df_tab:
         st.markdown('_**Only Matches** column means : if the score is based on the whole match or only the map_')
         # display the result
         try:
-            st.write(get_team_scores(team, map_type))
+            if map_type:
+                st.write(get_team_scores(team, map_type, map_name))
+            else:
+                st.write(get_team_scores(team, map_type))
         except KeyError:
-            st.error('No data available for this team and this map type')
+            st.error('No data available for this team and this map type or map name')
     with viz_tab:
         display_page_infos()
         st.subheader(
             f'Winrate of {team} against other teams on {map_type + ' maps' if map_type else "all types of matches"}')
         try:
-            chart_datas = get_team_scores(team, map_type).set_index('Opponent')[['Winrate', 'Total Matches']]
+            if map_type:
+                chart_datas = get_team_scores(team, map_type, map_name).set_index('Opponent')[['Winrate', 'Total Matches']]
+            else:
+                chart_datas = get_team_scores(team, map_type).set_index('Opponent')[['Winrate', 'Total Matches']]
             chart = alt.Chart(chart_datas.reset_index()).mark_bar().encode(
                 x='Opponent',
                 y=alt.Y('Winrate', scale=alt.Scale(domain=(0, 100))),
@@ -55,7 +65,7 @@ try:
             st.altair_chart(chart, use_container_width=True)
 
         except KeyError:
-            st.error('No data available for this team and this map type')
+            st.error('No data available for this team and this map type or map name')
 except AttributeError:
     # explain that the user goes to the page Heroes without having loaded the data from the Home page
     st.error('You need to load the data from the Home page first !')
