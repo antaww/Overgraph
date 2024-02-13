@@ -21,31 +21,36 @@ try:
     stats_list = df['stat'].unique()
     display_page_infos()
     stat = st.selectbox('Select a stat', stats_list)
+    data = get_players_stat(stat)
+
     df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
 
     # todo: sort the list
     with df_tab:
-        st.write(get_players_stat(stat))
+        st.write(data)
     with viz_tab:
-        st.markdown('👀 _Use the buttons to navigate through player pages_')
 
-        page_size = 15
-        data = get_players_stat(stat)
+        page_size = 10
         total_players = len(data)
 
         max_pages = total_players // page_size + (1 if total_players % page_size > 0 else 0)
-        page_number = st.number_input('Select Page', 1, max_pages, 1, format='%d')
+        page_number = st.slider('Select a page', 1, max_pages, 1)
+        st.markdown('👀 _Use the slider to navigate through player pages_')
 
         start_index = (page_number - 1) * page_size
         end_index = start_index + page_size
 
         data = data.iloc[start_index:end_index]
 
-        st.subheader(
-            f'Page {page_number}/{max_pages} for the stat "{stat} (from {start_index + 1} to {end_index})"')
+        st.subheader(f'Page {page_number}/{max_pages} for the stat "{stat} (from {start_index + 1} to {end_index})"')
+        # Round the 'stat' column to 2 decimal places
+        data[stat] = data[stat].round(2)
+        formatted_stat = data[stat].apply(lambda x: "{:,}".format(x))
 
-        fig = px.bar(data, x=stat, y=data.index, labels={'x': stat, 'y': 'Player'})
+        fig = px.bar(data, x=stat, y=data.index, labels={'x': stat, 'y': 'Player'}, color=stat,
+                     color_continuous_scale='reds')
         fig.update_layout(yaxis={'categoryorder': 'total ascending'})
+        fig.update_traces(textposition='inside', text=formatted_stat, textfont_size=100, textfont_color='Black')
         st.plotly_chart(fig)
 except AttributeError:
     st.error('You need to load the data from the Home page first !')
