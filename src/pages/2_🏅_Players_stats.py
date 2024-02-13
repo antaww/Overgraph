@@ -15,40 +15,38 @@ def display_page_infos():
 
 
 try:
-    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
     df = st.session_state.df
     get_players_stat = st.session_state.get_players_stat
 
     stats_list = df['stat'].unique()
+    display_page_infos()
+    stat = st.selectbox('Select a stat', stats_list)
+    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
+
     # todo: sort the list
     with df_tab:
-        display_page_infos()
-        stat = st.selectbox('Select a stat', stats_list)
         st.write(get_players_stat(stat))
 
     with viz_tab:
-        display_page_infos()
-        max_players_percentage = st.slider('', 1, 100, 50, 1, format='%d %%')
-        st.markdown('👀 _Use the slider to select the percentage of players to display_')
-        order = st.radio('', ['Higher', 'Lower'], index=1)
+        st.markdown('👀 _Use the buttons to navigate through player pages_')
 
+        page_size = 15
         data = get_players_stat(stat)
-        max_players = int(len(data) * max_players_percentage / 100)
-        if max_players == 0:
-            max_players = 1
+        total_players = len(data)
 
-        if order == 'Lower':
-            order_label = 'lowest'
-            data = data.sort_values(ascending=True)
-        else:
-            order_label = 'highest'
-            data = data.sort_values(ascending=False)
-        data = data.head(max_players)
+        max_pages = total_players // page_size + (1 if total_players % page_size > 0 else 0)
+        page_number = st.number_input('Select Page', 1, max_pages, 1, format='%d')
+
+        start_index = (page_number - 1) * page_size
+        end_index = start_index + page_size
+
+        data = data.iloc[start_index:end_index]
+
         st.subheader(
-            f'Top {max_players_percentage}% ({max_players} player{"s" if max_players != 1 else ""}) {order_label} for the stat "{stat}"')
-        fig = px.pie(data, values=stat, names=data.index)
-        pull_values = [0.1 if i == 0 else 0.025 for i in range(max_players)]
-        fig.update_traces(textposition='inside', textinfo='percent+label+value', pull=pull_values, hole=0.2)
+            f'Page {page_number}/{max_pages} for the stat "{stat} (from {start_index + 1} to {end_index})"')
+
+        fig = px.bar(data, x=stat, y=data.index, labels={'x': stat, 'y': 'Player'})
+        fig.update_layout(yaxis={'categoryorder': 'total ascending'})
         st.plotly_chart(fig)
 except AttributeError:
     st.error('You need to load the data from the Home page first !')
