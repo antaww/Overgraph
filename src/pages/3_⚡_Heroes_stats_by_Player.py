@@ -8,6 +8,14 @@ st.set_page_config(
     page_icon="⚡",
 )
 
+def display_page_infos():
+    st.subheader('Get specific stats for every hero of a player')
+    st.markdown("""
+                        The collected datas provide a comprehensive overview of **every player performances depending on a stat in the Overwatch League**. 
+                        The records indicate the full players list and the corresponding stat value. 
+                        Analyzing the players stats could help to understand the overall balance of the game and the meta.
+                        """)
+
 try:
     df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
     df = st.session_state.df
@@ -17,11 +25,12 @@ try:
     stats_list = df['stat'].unique()
 
     with df_tab:
-        st.subheader('Get specific stats for a player')
+        display_page_infos()
         player = st.selectbox('Select a player', players_list)
         stat = st.selectbox('Select a stat', stats_list)
         st.write(get_heroes_stat_by_player(stat, player))
     with viz_tab:
+        display_page_infos()
         data = get_heroes_stat_by_player(stat, player)
         data = data[data.index != 'All Heroes']
 
