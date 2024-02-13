@@ -39,10 +39,10 @@ try:
 
         if order == 'Lower':
             order_label = 'lowest'
-            data = data.sort_values(ascending=True)
+            data = data.sort_values(ascending=True, by=stat)
         else:
             order_label = 'highest'
-            data = data.sort_values(ascending=False)
+            data = data.sort_values(ascending=False, by=stat)
         data = data.head(max_heroes)
         st.subheader(
             f'Top {max_heroes_percentage}% ({max_heroes} hero{"es" if max_heroes != 1 else ""}) {order_label} for the '
