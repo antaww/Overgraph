@@ -209,77 +209,178 @@ def get_team_profile(team: str, stat: str, stage: str = None) -> pd.DataFrame:
     return result
 
 # %% owl.ipynb 60
-def get_heroes_stat(stat: str) -> pd.Series:
-    result = df[df['stat'] == stat].groupby('hero')['stat_amount'].sum().sort_values(ascending=False)
+def get_heroes_stat(stat: str) -> pd.DataFrame:
+    """
+    This function calculates the total amount of a specific statistic for each hero in the dataset.
+
+    Parameters:
+    stat (str): The statistic to consider.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing the total amount of the statistic for each hero, sorted in descending order.
+    """
+    # Filter the DataFrame based on the statistic
+    result = df[df['stat'] == stat]
+    
+    # Group by hero and sum the statistic amounts
+    result = result.groupby('hero')['stat_amount'].sum().sort_values(ascending=False)
+    
+    # Set the name of the Series and its index
     result.name = stat
     result.index.name = 'Hero'
+    
+    # Convert the Series to a DataFrame
+    result = result.to_frame()
+    
     return result
 
 
 # %% owl.ipynb 62
-def get_players_stat(stat: str) -> pd.Series:
-    result = df[df['stat'] == stat].groupby('player')['stat_amount'].sum().sort_values(ascending=False)
+def get_players_stat(stat: str) -> pd.DataFrame:
+    """
+    This function calculates the total amount of a specific statistic for each player in the dataset.
+
+    Parameters:
+    stat (str): The statistic to consider.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing the total amount of the statistic for each player, sorted in descending order.
+    """
+    # Filter the DataFrame based on the statistic
+    result = df[df['stat'] == stat]
+
+    # Group by player and sum the statistic amounts
+    result = result.groupby('player')['stat_amount'].sum().sort_values(ascending=False)
+
+    # Set the name of the Series and its index
     result.name = stat
     result.index.name = 'Player'
+
+    # Convert the Series to a DataFrame
+    result = result.to_frame()
+
     return result
 
 # %% owl.ipynb 64
 def avg_stats_per_game(stat: str, player: str) -> pd.DataFrame:
+    """
+    This function calculates the average amount of a specific statistic per game for a specific player.
+
+    Parameters:
+    stat (str): The statistic to consider.
+    player (str): The player to consider.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing the average amount of the statistic per game for each hero the player has played, 
+    the number of games played with each hero, sorted in descending order of the average statistic.
+    """
+    # Filter the DataFrame based on the statistic and player
     player_data = df[(df['stat'] == stat) & (df['player'] == player)]
     results = pd.DataFrame(columns=['Hero', 'Stat', 'Avg per game'])
 
+    # Filter the DataFrame based on the statistic
     stat_data = player_data[player_data['stat'] == stat]
+    
+    # Calculate the average statistic amount per game for each hero
     avg_per_game = stat_data.groupby(['hero'])['stat_amount'].mean().reset_index()
     avg_per_game.columns = ['Hero', 'Avg per game']
+    
+    # Calculate the number of games played with each hero
     avg_per_game['Number of game'] = stat_data.groupby(['hero'])['stat_amount'].count().reset_index()['stat_amount']
+    
+    # Concatenate the results
     results = pd.concat([results, avg_per_game], ignore_index=True, sort=False)
 
     return results[['Hero', 'Avg per game', 'Number of game']]
 
 # %% owl.ipynb 65
 def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
+    """
+    This function calculates the total amount of a specific statistic for each hero played by a specific player.
+
+    Parameters:
+    stat (str): The statistic to consider.
+    player (str): The player to consider.
+
+    Returns:
+    pd.Series: A Series containing the total amount of the statistic for each hero played by the player, 
+    sorted in descending order, and the average statistic per game.
+    """
+    # Filter the DataFrame based on the statistic and player
     result = df[(df['stat'] == stat) & (df['player'] == player)].groupby('hero')['stat_amount'].sum().sort_values(
         ascending=False)
     result.name = stat
     result.index.name = 'Hero'
+    
+    # Calculate the average statistic per game
     stat_avg = avg_stats_per_game(stat, player)
+    
+    # Merge the total and average statistics
     result = result.reset_index().merge(stat_avg, on='Hero', how='left')
-    #reset index
+    
+    # Reset the index
     result = result.set_index('Hero')
+    
     return result
 
 # %% owl.ipynb 68
 def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
+    """
+    This function calculates the total amount of a specific statistic for each player in a specific team.
+
+    Parameters:
+    stat (str): The statistic to consider.
+    team (str): The team to consider.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing the total amount of the statistic for each player in the team, sorted in descending order.
+    """
+    # Filter the DataFrame based on the statistic and team
     result = df[(df['stat'] == stat) & (df['team'] == team)].groupby('player')['stat_amount'].sum().sort_values(
         ascending=False)
+
+    # Set the name of the Series and its index
     result.name = stat
     result.index.name = 'Player'
+    result = result.to_frame()
+
     return result
 
 # %% owl.ipynb 70
 def get_team_scores(team: str, map_type: str = None, map_name: str = None) -> pd.DataFrame:
-    # stock every unique game from team (each game as a unique 'match_id'), team name is stocked in 'team_one_name' or 'team_two_name'
+    """
+    This function generates a DataFrame containing the scores of a specific team, optionally filtered by map type and map name.
+
+    Parameters:
+    team (str): The name of the team.
+    map_type (str, optional): The type of the map. If None, all map types are considered.
+    map_name (str, optional): The name of the map. If None, all maps are considered.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing the scores of the team, including the number of wins, losses, and the win rate.
+    """
+    # Stock every unique game from team (each game as a unique 'match_id'), team name is stocked in 'team_one_name' or 'team_two_name'
     team_games = map_stats[(map_stats['team_one_name'] == team) | (map_stats['team_two_name'] == team)]
     if map_type:  # only 1 row per game
-        # add column 'map_type' from dataframe 'df'
+        # Add column 'map_type' from dataframe 'df'
         team_games = team_games.merge(df[['match_id', 'map_type']], on='match_id')
         team_games = team_games[team_games['map_type'].str.lower() == map_type.lower()]
         if map_name:  # only 1 row per game
             team_games = team_games[team_games['map_name'].str.lower() == map_name.lower()]
-        # get one row per map
+        # Get one row per map
         team_games = team_games.drop_duplicates(subset='round_start_time')
-        # do not keep twice same game_number per match_id
+        # Do not keep twice same game_number per match_id
         df_grp = team_games.groupby(['match_id', 'game_number'])
         team_games = df_grp.first().reset_index()
     else:  # only 1 row per match
-        # get one row per match
+        # Get one row per match
         team_games = team_games.drop_duplicates(subset='match_id')
 
-    # get teams list
+    # Get teams list
     opponents = team_games[['team_one_name', 'team_two_name']]
-    # remove team input from opponents list
+    # Remove team input from opponents list
     opponents = opponents[opponents != team]
-    # regroup in one column and remove duplicates
+    # Regroup in one column and remove duplicates
     opponents = opponents.stack().reset_index(drop=True).drop_duplicates()
 
     results = pd.DataFrame(columns=['team', 'opponent', 'win', 'loss', 'winrate', 'map_type', 'only_matches'])
@@ -287,7 +388,7 @@ def get_team_scores(team: str, map_type: str = None, map_name: str = None) -> pd
     for opponent in opponents:
         matches = team_games[((team_games['team_one_name'] == team) &
                               (team_games['team_two_name'] == opponent)) | (
-                                     (team_games['team_one_name'] == opponent) & (team_games['team_two_name'] == team))]
+                                 (team_games['team_one_name'] == opponent) & (team_games['team_two_name'] == team))]
 
         if map_type:
             wins = matches['map_winner'] == team
@@ -307,13 +408,13 @@ def get_team_scores(team: str, map_type: str = None, map_name: str = None) -> pd
              'only_matches': not map_type, 'map_name': map_name}, index=[0])
         results = pd.concat([results, row])
 
-    # rename columns
+    # Rename columns
     results.rename(columns={'team': 'Team', 'opponent': 'Opponent', 'total_matches': 'Total Matches', 'win': 'Win',
                             'loss': 'Loss', 'winrate': 'Winrate', 'map_type': 'Map Type',
                             'only_matches': 'Only Matches', 'map_name': 'Map Name'},
                    inplace=True)
 
-    # reorder columns
+    # Reorder columns
     results = results[['Team', 'Opponent', 'Total Matches', 'Win', 'Loss', 'Winrate', 'Map Type', 'Map Name', 'Only Matches']]
     if not map_type:
         results = results.drop(columns='Map Type')
