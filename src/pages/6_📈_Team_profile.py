@@ -6,7 +6,10 @@ import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
-st.set_page_config(page_title="Overgraph - Team VS Teams", page_icon="⚔️", )
+st.set_page_config(
+    page_title="Overgraph - Team VS Teams",
+    page_icon="./src/img/overgraph-logo.png"
+)
 
 
 def display_page_infos():
@@ -89,7 +92,8 @@ try:
             if chart_datas.empty:
                 st.error('No data available for this team and this stage (you should select another stat)')
             else:
-                fig = double_y_lines(dataframe=chart_datas, title=f'{team}\'s {stat} and winrate over time on all stages',
+                fig = double_y_lines(dataframe=chart_datas,
+                                     title=f'{team}\'s {stat} and winrate over time on all stages',
                                      x='Start Time', y1=stat, y2='Winrate', colory1='red', colory2='blue',
                                      colormean='green', second_title_condition=stage,
                                      second_title=f'{team}\'s {stat} and winrate over time on {stage}',

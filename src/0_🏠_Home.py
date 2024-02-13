@@ -14,7 +14,7 @@ st.session_state.get_team_profile = get_team_profile
 
 st.set_page_config(
     page_title="Overgraph",
-    page_icon="👋",
+    page_icon="./src/img/overgraph-logo.png",
 )
 
 st.title('Overgraph')

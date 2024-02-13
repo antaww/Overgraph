@@ -2,7 +2,10 @@ import os
 import streamlit as st
 import plotly.express as px
 
-st.set_page_config(page_title="Overgraph - Heroes stats", page_icon="🔥", )
+st.set_page_config(
+    page_title="Overgraph - Heroes stats",
+    page_icon="./src/img/overgraph-logo.png"
+)
 
 
 def display_page_infos():

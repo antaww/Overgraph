@@ -5,7 +5,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Overgraph - Players stats by Team",
-    page_icon="💡",
+    page_icon="./src/img/overgraph-logo.png"
 )
 
 

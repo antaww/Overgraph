@@ -2,7 +2,10 @@ import os
 import plotly.express as px
 import streamlit as st
 
-st.set_page_config(page_title="Overgraph - Players stats", page_icon="🏅", )
+st.set_page_config(
+    page_title="Overgraph - Players stats",
+    page_icon="./src/img/overgraph-logo.png"
+)
 
 
 def display_page_infos():
@@ -46,14 +49,16 @@ try:
 
             data = data.iloc[start_index:end_index]
 
-            st.subheader(f'Page {page_number}/{max_pages} for the stat "{stat} (from {start_index + 1} to {end_index})"')
+            st.subheader(
+                f'Page {page_number}/{max_pages} for the stat "{stat} (from {start_index + 1} to {end_index})"')
             data[stat] = data[stat].round(2)
             formatted_stat = data[stat].apply(lambda x: "{:,}".format(x))
 
             fig = px.bar(data, x=stat, y=data.index, labels={'x': stat, 'y': 'Player'}, color=stat,
                          color_continuous_scale='reds')
             fig.update_layout(yaxis={'categoryorder': 'total ascending'})
-            fig.update_traces(textposition='inside', text=formatted_stat, textfont_size=100, textfont_color='Black', textangle=0)
+            fig.update_traces(textposition='inside', text=formatted_stat, textfont_size=100, textfont_color='Black',
+                              textangle=0)
             st.plotly_chart(fig)
 except AttributeError:
     st.error('You need to load the data from the Home page first !')

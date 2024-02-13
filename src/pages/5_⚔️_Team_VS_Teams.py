@@ -3,7 +3,10 @@ import os
 import altair as alt
 import streamlit as st
 
-st.set_page_config(page_title="Overgraph - Team VS Teams", page_icon="⚔️", )
+st.set_page_config(
+    page_title="Overgraph - Team VS Teams",
+    page_icon="./src/img/overgraph-logo.png"
+)
 
 
 def display_page_infos():
@@ -50,7 +53,8 @@ try:
             f'Winrate of {team} against other teams on {map_type + ' maps' if map_type else "all types of matches"}')
         try:
             if map_type:
-                chart_datas = get_team_scores(team, map_type, map_name).set_index('Opponent')[['Winrate', 'Total Matches']]
+                chart_datas = get_team_scores(team, map_type, map_name).set_index('Opponent')[
+                    ['Winrate', 'Total Matches']]
             else:
                 chart_datas = get_team_scores(team, map_type).set_index('Opponent')[['Winrate', 'Total Matches']]
             chart = alt.Chart(chart_datas.reset_index()).mark_bar().encode(
