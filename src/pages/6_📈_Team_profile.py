@@ -2,7 +2,7 @@ import os
 
 import matplotlib.pyplot as plt
 import pandas as pd
-import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
@@ -20,28 +20,41 @@ def display_page_infos():
 
 
 def double_y_lines(dataframe: pd.DataFrame, title: str, x: str, y1: str, y2: str,
-                   color1: str, color2: str, second_title_condition: bool = False,
+                   colory1: str, colory2: str, colormean: str, second_title_condition: bool = False,
                    second_title: str = None, mode: str = 'lines+markers') -> plt.Figure:
+    # Create a subplot with two y-axes
     figure = make_subplots(specs=[[{"secondary_y": True}]])
-    figure.add_trace(px.line(dataframe, x=x, y=y1).data[0])
-    figure.add_trace(px.line(dataframe, x=x, y=y2).data[0], secondary_y=True)
-    # color lines
-    figure.data[0].line.color = color1
-    figure.data[1].line.color = color2
-    # add title
+
+    # Add the first trace to the plot for the primary y-axis
+    figure.add_trace(go.Scatter(x=dataframe[x], y=dataframe[y1], name=y1, line=dict(color=colory1), mode=mode))
+
+    # Add the second trace to the plot for the secondary y-axis
+    figure.add_trace(go.Scatter(x=dataframe[x], y=dataframe[y2], name=y2, line=dict(color=colory2), mode=mode),
+                     secondary_y=True)
+
+    # Set the title of the plot based on the condition
     if second_title_condition:
-        figure.update_layout(title=title)
-    else:
         figure.update_layout(title=second_title)
-    # add x axis title
+    else:
+        figure.update_layout(title=title)
+
+    # Set the title for the x-axis
     figure.update_xaxes(title_text=x)
-    # add y axis title
+
+    # Set the title for the y-axes
     figure.update_yaxes(title_text=y1, secondary_y=False)
     figure.update_yaxes(title_text=y2, secondary_y=True)
-    # add point
-    figure.update_traces(mode=mode)
-    # make x axis start on first value date
+
+    # Set the range for the x-axis to start on the first value date
     figure.update_xaxes(range=[dataframe[x].min(), dataframe[x].max()])
+
+    # Calculate the mean of y1
+    mean_y1 = dataframe[y1].mean()
+
+    # Add a horizontal line at the mean of y1
+    figure.add_trace(go.Scatter(x=[dataframe[x].min(), dataframe[x].max()], y=[mean_y1, mean_y1],
+                                mode="lines", line=dict(color=colormean, dash='dash'), name=f'Mean of {y1}'))
+
     return figure
 
 
@@ -74,14 +87,16 @@ try:
             chart_datas = get_team_profile(team, stat, stage)
             # todo: add mean line for the stat
             fig = double_y_lines(dataframe=chart_datas, title=f'{team}\'s {stat} and winrate over time on all stages',
-                                 x='Start Time', y1=stat, y2='Winrate', color1='red', color2='blue',
+                                 x='Start Time', y1=stat, y2='Winrate', colory1='red', colory2='blue',
+                                 colormean='green',
                                  second_title_condition=stage,
                                  second_title=f'{team}\'s {stat} and winrate over time on {stage}',
                                  mode='lines+markers')
 
-            fig2 = double_y_lines(dataframe=chart_datas, title=f'{team}\'s Avg {stat} and winrate over time on all stages',
-                                  x='Start Time', y1=f'Avg {stat}', y2='Winrate', color1='red', color2='blue',
-                                  second_title_condition=stage,
+            fig2 = double_y_lines(dataframe=chart_datas,
+                                  title=f'{team}\'s Avg {stat} and winrate over time on all stages',
+                                  x='Start Time', y1=f'Avg {stat}', y2='Winrate', colory1='red', colory2='blue',
+                                  colormean='green', second_title_condition=stage,
                                   second_title=f'{team}\'s Avg {stat} and winrate over time on {stage}',
                                   mode='lines+markers')
             st.plotly_chart(fig)
