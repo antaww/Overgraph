@@ -17,20 +17,20 @@ def display_page_infos():
                         """)
 
 try:
-    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
     df = st.session_state.df
     get_heroes_stat_by_player = st.session_state.get_heroes_stat_by_player
 
     players_list = df['player'].unique()
     stats_list = df['stat'].unique()
 
+    display_page_infos()
+    player = st.selectbox('Select a player', players_list)
+    stat = st.selectbox('Select a stat', stats_list)
+    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
+
     with df_tab:
-        display_page_infos()
-        player = st.selectbox('Select a player', players_list)
-        stat = st.selectbox('Select a stat', stats_list)
         st.write(get_heroes_stat_by_player(stat, player))
     with viz_tab:
-        display_page_infos()
         data = get_heroes_stat_by_player(stat, player)
         data = data[data.index != 'All Heroes']
 

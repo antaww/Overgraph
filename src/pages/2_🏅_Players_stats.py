@@ -26,7 +26,6 @@ try:
     # todo: sort the list
     with df_tab:
         st.write(get_players_stat(stat))
-
     with viz_tab:
         st.markdown('👀 _Use the buttons to navigate through player pages_')
 

@@ -15,20 +15,18 @@ def display_page_infos():
 
 
 try:
-    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
     df = st.session_state.df
     get_heroes_stat = st.session_state.get_heroes_stat
 
     stats_list = df['stat'].unique()
 
+    display_page_infos()
+    stat = st.selectbox('Select a stat', stats_list)
+    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
+
     with df_tab:
-        display_page_infos()
-        # create a dropdown list with every unique 'stat'
-        stat = st.selectbox('Select a stat', stats_list)
-        # display the result
         st.write(get_heroes_stat(stat))
     with viz_tab:
-        display_page_infos()
         max_heroes_percentage = st.slider('', 1, 100, 50, 1, format='%d %%')
         st.markdown('👀 _Use the slider to select the percentage of players to display_')
         order = st.radio('', ['Higher', 'Lower'], index=1)

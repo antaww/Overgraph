@@ -17,7 +17,6 @@ def display_page_infos():
 
 
 try:
-    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
     map_stats = st.session_state.map_stats
     df = st.session_state.df
     get_team_scores = st.session_state.get_team_scores
@@ -25,11 +24,13 @@ try:
     teams_list = df['team'].unique()
     map_types_list = df['map_type'].str.title().unique()
 
+    display_page_infos()
+    # create a dropdown list with every unique 'stat'
+    team = st.selectbox('Select a team', teams_list)
+    map_type = st.selectbox('Select a map (not required)', [''] + list(map_types_list))
+    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
+
     with df_tab:
-        display_page_infos()
-        # create a dropdown list with every unique 'stat'
-        team = st.selectbox('Select a team', teams_list)
-        map_type = st.selectbox('Select a map (not required)', [''] + list(map_types_list))
         st.markdown('_**Only Matches** column means : if the score is based on the whole match or only the map_')
         # display the result
         try:

@@ -46,7 +46,6 @@ def double_y_lines(dataframe: pd.DataFrame, title: str, x: str, y1: str, y2: str
 
 
 try:
-    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
     map_stats = st.session_state.map_stats
     df = st.session_state.df
     get_team_profile = st.session_state.get_team_profile
@@ -55,20 +54,22 @@ try:
     stats_list = df['stat'].unique()
     stages_list = df['stage'].unique()
 
+    display_page_infos()
+
+    team = st.selectbox('Select a team', teams_list)
+    stat = st.selectbox('Select a stat', stats_list)
+    stage = st.selectbox('Select a stage (not required)', [''] + list(stages_list))
+
+    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
+
     with df_tab:
-        display_page_infos()
-        # create a dropdown list with every unique 'stat'
-        team = st.selectbox('Select a team', teams_list)
-        stat = st.selectbox('Select a stat', stats_list)
-        stage = st.selectbox('Select a stage (not required)', [''] + list(stages_list))
         try:
             st.write(get_team_profile(team, stat, stage))
         except KeyError:
             st.error('No data available for this team and this stage')
     with viz_tab:
-        display_page_infos()
         st.subheader(
-            f'todo')
+            f'{team}\'s {stat} and winrate over time on {stage if stage else "all stages"}')
         try:
             chart_datas = get_team_profile(team, stat, stage)
             # todo: add mean line for the stat
