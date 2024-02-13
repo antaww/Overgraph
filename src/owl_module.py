@@ -144,7 +144,6 @@ def get_team_profile(team: str, stat: str, stage: str = None) -> pd.DataFrame:
     
     # If a stage is specified, filter the DataFrame based on the stage
     if stage:
-        print('stage filter')
         result = result[result['stage'] == stage]
     
     # Calculate the total stat amount for each match
