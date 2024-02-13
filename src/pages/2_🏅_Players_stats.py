@@ -22,7 +22,7 @@ try:
     display_page_infos()
     stat = st.selectbox('Select a stat', stats_list)
     data = get_players_stat(stat)
-
+    print(type(data))
     df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
 
     # todo: sort the list
@@ -43,14 +43,13 @@ try:
         data = data.iloc[start_index:end_index]
 
         st.subheader(f'Page {page_number}/{max_pages} for the stat "{stat} (from {start_index + 1} to {end_index})"')
-        # Round the 'stat' column to 2 decimal places
         data[stat] = data[stat].round(2)
         formatted_stat = data[stat].apply(lambda x: "{:,}".format(x))
 
         fig = px.bar(data, x=stat, y=data.index, labels={'x': stat, 'y': 'Player'}, color=stat,
                      color_continuous_scale='reds')
         fig.update_layout(yaxis={'categoryorder': 'total ascending'})
-        fig.update_traces(textposition='inside', text=formatted_stat, textfont_size=100, textfont_color='Black')
+        fig.update_traces(textposition='inside', text=formatted_stat, textfont_size=100, textfont_color='Black', textangle=0)
         st.plotly_chart(fig)
 except AttributeError:
     st.error('You need to load the data from the Home page first !')

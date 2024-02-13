@@ -1,5 +1,7 @@
 import os
 import streamlit as st
+import plotly.express as px
+
 
 st.set_page_config(
     page_title="Overgraph - Players stats by Team",
@@ -23,7 +25,15 @@ try:
     with viz_tab:
         st.subheader(f'{team}\'s {stat} stats')
         data = get_players_stat_by_team(stat, team)
-        st.bar_chart(data)
+        data[stat] = data[stat].round(2)
+
+        formatted_stat = data[stat].apply(lambda x: "{:,}".format(x))
+        fig = px.bar(data, x=stat, y=data.index, labels={'x': stat, 'y': 'Player'}, color=stat,
+                     color_continuous_scale='reds')
+        fig.update_layout(yaxis={'categoryorder': 'total ascending'})
+        fig.update_traces(textposition='inside', text=formatted_stat, textfont_size=100, textfont_color='Black', textangle=0)
+
+        st.plotly_chart(fig)
 except AttributeError:
     # explain that the user goes to the page Heroes without having loaded the data from the Home page
     st.error('You need to load the data from the Home page first !')
