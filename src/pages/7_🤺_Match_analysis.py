@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(
     page_title="Overgraph - Match analysis",
-    page_icon="./src/img/overgraph-logo.png"
+    page_icon="./src/static/overgraph-logo.png"
 )
 
 

@@ -8,7 +8,7 @@ from plotly.subplots import make_subplots
 
 st.set_page_config(
     page_title="Overgraph - Team VS Teams",
-    page_icon="./src/img/overgraph-logo.png"
+    page_icon="./src/static/overgraph-logo.png"
 )
 
 

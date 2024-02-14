@@ -4,7 +4,7 @@ import plotly.express as px
 
 st.set_page_config(
     page_title="Overgraph - Heroes stats",
-    page_icon="./src/img/overgraph-logo.png"
+    page_icon="./src/static/overgraph-logo.png"
 )
 
 
