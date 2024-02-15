@@ -17,7 +17,14 @@ st.set_page_config(
     page_icon="./src/static/overgraph-logo.png",
 )
 
-st.image('src/static/overgraph-removebg-preview.png', width=200, use_column_width="auto")
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.write('')
+with col2:
+    st.image('src/static/overgraph-removebg-preview.png', use_column_width=True)
+with col3:
+    st.write('')
 st.markdown("""
             ### ☝️🤓 Welcome to :red[Overgraph], a website regrouping every Overwatch League stats.
             ##### Use Overgraph to get a precise analysis of the Overwatch League data like heroes stats, players stats, teams stats and matches analysis.
