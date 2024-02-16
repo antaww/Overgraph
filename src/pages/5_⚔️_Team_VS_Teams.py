@@ -57,16 +57,6 @@ try:
                     ['Winrate', 'Total Matches']]
             else:
                 chart_datas = get_team_scores(team, map_type).set_index('Opponent')[['Winrate', 'Total Matches']]
-            # chart = alt.Chart(chart_datas.reset_index()).mark_bar().encode(
-            #     x='Opponent',
-            #     y=alt.Y('Winrate', scale=alt.Scale(domain=(0, 100))),
-            #     color=alt.Color('Total Matches', scale=alt.Scale(scheme='orangered')),
-            #     # https://vega.github.io/vega/docs/schemes/#reference
-            #     tooltip=['Opponent', 'Winrate', 'Total Matches'],
-            # ).properties(
-            #     height=500
-            # )
-            # st.altair_chart(chart, use_container_width=True)
             chart = alt.Chart(chart_datas.reset_index()).mark_bar().encode(
                 y=alt.Y('Opponent', sort=alt.EncodingSortField(field="Winrate", order='descending')),
                 x=alt.X('Winrate', scale=alt.Scale(domain=(0, 100))),
