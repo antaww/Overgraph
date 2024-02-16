@@ -39,28 +39,31 @@ try:
         else:
             max_heroes_percentage = st.slider('', 1, 100, 50, 1, format='%d %%')
             st.markdown('👀 _Use the slider to select the percentage of players to display_')
-            order = st.radio('', ['Higher', 'Lower'], index=1)
+            order = st.radio('', ['Higher', 'Lower'], index=0)
 
             data = data[data.index != 'All Heroes']
-            max_heroes = int(len(data) * max_heroes_percentage / 100)
-            if max_heroes == 0:
-                max_heroes = 1
 
-            if order == 'Lower':
-                order_label = 'lowest'
-                data = data.sort_values(ascending=True, by=stat)
-            else:
-                order_label = 'highest'
-                data = data.sort_values(ascending=False, by=stat)
-            data = data.head(max_heroes)
-            st.subheader(
-                f'Top {max_heroes_percentage}% ({max_heroes} hero{"es" if max_heroes != 1 else ""}) {order_label} for the '
-                f'stat "{stat}"')
-            fig = px.pie(data, values=stat, names=data.index)
-            pull_values = [0.1 if i == 0 else 0.025 for i in range(max_heroes)]
-            fig.update_traces(textposition='inside', textinfo='percent+label+value', pull=pull_values, hole=0.2)
-            st.plotly_chart(fig)
+            for role in data['Role'].unique():
+                data_role = data[data['Role'] == role]
+                max_heroes = int(len(data_role) * max_heroes_percentage / 100)
+                if max_heroes == 0:
+                    max_heroes = 1
 
+                if order == 'Lower':
+                    order_label = 'lowest'
+                    data_role = data_role.sort_values(ascending=True, by=stat)
+                else:
+                    order_label = 'highest'
+                    data_role = data_role.sort_values(ascending=False, by=stat)
+                data_role = data_role.head(max_heroes)
+
+                st.subheader(
+                    f'Top {max_heroes_percentage}% ({max_heroes} hero{"es" if max_heroes != 1 else ""}) {order_label} for the '
+                    f'stat "{stat}" in the role "{role}"')
+                fig = px.pie(data_role, values=stat, names=data_role.index)
+                pull_values = [0.1 if i == 0 else 0.025 for i in range(max_heroes)]
+                fig.update_traces(textposition='inside', textinfo='percent+label+value', pull=pull_values, hole=0.2)
+                st.plotly_chart(fig)
 except AttributeError:
     # explain that the user goes to the page Heroes without having loaded the data from the Home page
     st.error('You need to load the data from the Home page first !')
