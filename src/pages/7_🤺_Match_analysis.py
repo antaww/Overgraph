@@ -1,6 +1,5 @@
 import os
 
-import numpy as np
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
@@ -28,6 +27,7 @@ try:
     df = st.session_state.df
     get_match_analysis_all_stats = st.session_state.get_match_analysis_all_stats
     get_match_analysis_heroes_played = st.session_state.get_match_analysis_heroes_played
+    get_match_analysis_heroes_stats = st.session_state.get_match_analysis_heroes_stats
 
     teams_list = df['team'].unique()
     stats_list = df['stat'].unique()
@@ -144,18 +144,124 @@ try:
 
                 half_players = total_players // 2
 
-                for i in range(half_players):
-                    team_one_subplots.add_trace(figures[i], row=(i // 3) + 1, col=(i % 3) + 1)
+                for h in range(half_players):
+                    team_one_subplots.add_trace(figures[h], row=(h // 3) + 1, col=(h % 3) + 1)
 
-                for i in range(half_players, total_players):
-                    team_two_subplots.add_trace(figures[i], row=((i - half_players) // 3) + 1,
-                                                col=((i - half_players) % 3) + 1)
+                for m in range(half_players, total_players):
+                    team_two_subplots.add_trace(figures[m], row=((m - half_players) // 3) + 1,
+                                                col=((m - half_players) % 3) + 1)
                 st.plotly_chart(team_one_subplots, use_container_width=True)
                 st.plotly_chart(team_two_subplots, use_container_width=True)
 
                 st.markdown("___")
                 st.subheader(f'Compare players stats ')
 
+                team_one_players = heroes_played[heroes_played['Team'] == teams[0]]['Player'].unique()
+                team_two_players = heroes_played[heroes_played['Team'] == teams[1]]['Player'].unique()
+
+                st.write('Choose a player from each team to compare their stats')
+
+                # create 2 columns to display the selectbox for each team
+                col1, col2 = st.columns(2)
+                with col1:
+                    team_one_player = st.selectbox(f'Choose a player from {teams[0]}', team_one_players,
+                                                   key=f'team_one_player_select_{maps[i]}')
+                with col2:
+                    team_two_player = st.selectbox(f'Choose a player from {teams[1]}', team_two_players,
+                                                   key=f'team_two_player_select_{maps[i]}')
+
+                radio = st.radio('Compare to :', ['All heroes', 'Specific hero'], key=f'radio_{maps[i]}')
+                if radio == 'Specific hero':
+                    team_one_player_heroes = heroes_played[heroes_played['Player'] == team_one_player]['Hero'].unique()
+                    team_two_player_heroes = heroes_played[heroes_played['Player'] == team_two_player]['Hero'].unique()
+
+                    # add 'All heroes' to the list of heroes to make it possible to compare if a player many heroes
+                    team_one_player_heroes = list(team_one_player_heroes)
+                    if len(team_one_player_heroes) > 1:
+                        team_one_player_heroes.append('All heroes')
+                    team_two_player_heroes = list(team_two_player_heroes)
+                    if len(team_two_player_heroes) > 1:
+                        team_two_player_heroes.append('All heroes')
+
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        team_one_player_hero = st.selectbox(f'Choose a hero for {team_one_player}',
+                                                            team_one_player_heroes,
+                                                            key=f'team_one_player_hero_select_{maps[i]}')
+                    with col2:
+                        team_two_player_hero = st.selectbox(f'Choose a hero for {team_two_player}',
+                                                            team_two_player_heroes,
+                                                            key=f'team_two_player_hero_select_{maps[i]}')
+
+                    if team_one_player_hero != 'All heroes':
+                        all_heroes = False
+                        team_one_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                                                                                team_one_player, all_heroes,
+                                                                                team_one_player_hero)
+                    else:
+                        team_one_player_hero = 'All heroes'
+                        all_heroes = True
+                        team_one_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                                                                                team_one_player, all_heroes)
+
+                    if team_two_player_hero != 'All heroes':
+                        all_heroes = False
+                        team_two_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                                                                                team_two_player, all_heroes,
+                                                                                team_two_player_hero)
+                    else:
+                        team_two_player_hero = 'All heroes'
+                        all_heroes = True
+                        team_two_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                                                                                team_two_player, all_heroes)
+                else:
+                    team_one_player_hero = 'All heroes'
+                    team_two_player_hero = 'All heroes'
+                    all_heroes = True
+                    team_one_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                                                                            team_one_player, all_heroes)
+                    team_two_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                                                                            team_two_player, all_heroes)
+
+                # remove lines with stat that are not in common
+                common_stats = list(set(team_one_player_stats['Stat']).intersection(team_two_player_stats['Stat']))
+                team_one_player_stats = team_one_player_stats[team_one_player_stats['Stat'].isin(common_stats)]
+                team_two_player_stats = team_two_player_stats[team_two_player_stats['Stat'].isin(common_stats)]
+
+                # Normalize the stats to have a value between 0 and 100
+                for stat in common_stats:
+                    max_value = max(team_one_player_stats[team_one_player_stats['Stat'] == stat]['Stat Amount'].max(),
+                                    team_two_player_stats[team_two_player_stats['Stat'] == stat]['Stat Amount'].max())
+                    team_one_player_stats.loc[team_one_player_stats['Stat'] == stat, 'Stat Amount'] = \
+                        team_one_player_stats[team_one_player_stats['Stat'] == stat]['Stat Amount'] / max_value * 100
+                    team_two_player_stats.loc[team_two_player_stats['Stat'] == stat, 'Stat Amount'] = \
+                        team_two_player_stats[team_two_player_stats['Stat'] == stat]['Stat Amount'] / max_value * 100
+
+                # use a radar chart to compare the stats of the two players
+                fig = go.Figure()
+                fig.add_trace(go.Scatterpolar(
+                    r=team_one_player_stats['Stat Amount'],
+                    theta=team_one_player_stats['Stat'],
+                    fill='toself',
+                    name=team_one_player,
+                    line=dict(color=team_one_color)
+                ))
+                fig.add_trace(go.Scatterpolar(
+                    r=team_two_player_stats['Stat Amount'],
+                    theta=team_two_player_stats['Stat'],
+                    fill='toself',
+                    name=team_two_player,
+                    line=dict(color=team_two_color)
+                ))
+                fig.update_layout(
+                    polar=dict(
+                        radialaxis=dict(
+                            visible=True,
+                            range=[0, 100]
+                        )),
+                    showlegend=True
+                )
+                st.plotly_chart(fig, use_container_width=True)
 
 except AttributeError:
     # explain that the user goes to the page Heroes without having loaded the data from the Home page
