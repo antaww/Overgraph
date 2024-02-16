@@ -1,5 +1,6 @@
 import os
 
+import numpy as np
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
@@ -25,6 +26,7 @@ try:
     # team_one_tab, team_two_tab = st.tabs(["Winner Team", "Looser Team"])
     map_stats = st.session_state.map_stats
     df = st.session_state.df
+    get_match_analysis_all_stats = st.session_state.get_match_analysis_all_stats
     get_match_analysis_heroes_played = st.session_state.get_match_analysis_heroes_played
 
     teams_list = df['team'].unique()
@@ -68,6 +70,58 @@ try:
 
         for i in range(len(maps)):
             with map_tabs[i]:
+                st.subheader(f'Global stats for {maps[i]}')
+                global_stats = get_match_analysis_all_stats(stage, int(match_id), maps[i])
+                teams = global_stats['Team'].unique()
+                stat_list = global_stats['Stat'].unique()
+
+                # do the sum of each stat for each team
+                global_stats_by_team = global_stats.groupby(['Team', 'Stat']).sum().reset_index()
+                # drop columns that are not useful (Hero, Player, Role)
+                global_stats_by_team = global_stats_by_team.drop(columns=['Hero', 'Player', 'Role'])
+
+                # create a radar chart that compares the stats of the two teams
+                team_one_stats = global_stats_by_team[global_stats_by_team['Team'] == teams[0]]
+                team_two_stats = global_stats_by_team[global_stats_by_team['Team'] == teams[1]]
+
+                team_one_color = 'rgba(0, 0, 255, 0.5)'
+                team_two_color = 'rgba(255, 0, 0, 0.5)'
+
+                # Normalize the stats to have a value between 0 and 100
+                for stat in stat_list:
+                    max_value = max(global_stats_by_team[global_stats_by_team['Stat'] == stat]['Stat Amount'])
+                    global_stats_by_team.loc[global_stats_by_team['Stat'] == stat, 'Stat Amount'] = \
+                        global_stats_by_team[global_stats_by_team['Stat'] == stat]['Stat Amount'] / max_value * 100
+
+                fig = go.Figure()
+                for team in teams:
+                    team_stats = global_stats_by_team[global_stats_by_team['Team'] == team]
+                    fig.add_trace(go.Scatterpolar(
+                        r=team_stats['Stat Amount'],
+                        theta=team_stats['Stat'],
+                        fill='toself',
+                        name=team,
+                        line=dict(
+                            color=team_one_color if team == team_one_stats['Team'].unique()[0] else team_two_color)
+                    ))
+                fig.update_layout(
+                    polar=dict(
+                        radialaxis=dict(
+                            visible=True,
+                            range=[0, 100]
+                        )),
+                    showlegend=True
+                )
+                st.plotly_chart(fig, use_container_width=True)
+
+                st.write("""
+                This radar chart compares the stats of the two teams. The stats are normalized to have a value between 0
+                 and 100. The team with the highest value value for a stat is considered as the max value. So the other
+                 team's value is calculated as a percentage of the max value.
+                """)
+
+                st.markdown("___")
+                st.subheader(f'Time Played by heroes for each teams in {maps[i]}')
                 heroes_played = get_match_analysis_heroes_played(stage, int(match_id), maps[i], all=False)
                 teams = heroes_played['Team'].unique()
                 figures = []
@@ -82,7 +136,6 @@ try:
                         players_name.append(player)
 
                 total_players = len(players_name)
-                st.subheader(f'Time Played by heroes for each teams in {maps[i]}')
 
                 team_one_subplots = make_subplots(rows=2, cols=3, subplot_titles=players_name[:total_players // 2])
                 team_one_subplots.update_layout(title_text=f'Heroes played for each player of {teams[0]}', bargap=0.5)
@@ -95,9 +148,13 @@ try:
                     team_one_subplots.add_trace(figures[i], row=(i // 3) + 1, col=(i % 3) + 1)
 
                 for i in range(half_players, total_players):
-                    team_two_subplots.add_trace(figures[i], row=((i - half_players) // 3) + 1, col=((i - half_players) % 3) + 1)
+                    team_two_subplots.add_trace(figures[i], row=((i - half_players) // 3) + 1,
+                                                col=((i - half_players) % 3) + 1)
                 st.plotly_chart(team_one_subplots, use_container_width=True)
                 st.plotly_chart(team_two_subplots, use_container_width=True)
+
+                st.markdown("___")
+                st.subheader(f'Compare players stats ')
 
 
 except AttributeError:

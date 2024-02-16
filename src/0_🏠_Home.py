@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 from owl_module import df, get_heroes_stat, get_heroes_stat_by_player, get_players_stat_by_team, get_team_scores, \
-    map_stats, get_players_stat, get_team_profile, get_match_analysis_heroes_played
+    map_stats, get_players_stat, get_team_profile, get_match_analysis_heroes_played, get_match_analysis_all_stats
 
 st.session_state.map_stats = map_stats
 st.session_state.df = df
@@ -11,6 +11,7 @@ st.session_state.get_heroes_stat_by_player = get_heroes_stat_by_player
 st.session_state.get_players_stat_by_team = get_players_stat_by_team
 st.session_state.get_team_scores = get_team_scores
 st.session_state.get_team_profile = get_team_profile
+st.session_state.get_match_analysis_all_stats = get_match_analysis_all_stats
 st.session_state.get_match_analysis_heroes_played = get_match_analysis_heroes_played
 
 st.set_page_config(
