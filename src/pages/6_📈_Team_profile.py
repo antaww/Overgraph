@@ -7,7 +7,7 @@ import streamlit as st
 from plotly.subplots import make_subplots
 
 st.set_page_config(
-    page_title="Overgraph - Team VS Teams",
+    page_title="Overgraph - Team profile",
     page_icon="./src/static/overgraph-logo.png"
 )
 

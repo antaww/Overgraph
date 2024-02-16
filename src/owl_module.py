@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['map_stats', 'df', 'get_match_analysis_heroes_played', 'get_match_analysis_all_stats',
            'get_match_analysis_heroes_stats', 'get_team_profile', 'get_heroes_stat', 'get_players_stat',
-           'get_heroes_stat_by_player', 'get_players_stat_by_team', 'get_team_scores']
+           'get_teams_leaderboard', 'get_heroes_stat_by_player', 'get_players_stat_by_team', 'get_team_scores']
 
 # %% owl.ipynb 0
 import dateutil.parser as dparser
@@ -212,18 +212,7 @@ def get_match_analysis_heroes_stats(stage: str, match: int, map: str, player: st
         if hero is not None:
             player_data = player_data[player_data['hero'] == hero]
 
-        # Get hero's role
-        hero_role = player_data['role'].iloc[0]
-
-        # Choose stats list based on role
-        if hero_role == 'Tank' and stat in tank_stats:
-            player_data = player_data[['team', 'player', 'hero', 'role', 'stat', 'stat_amount']]
-        elif hero_role == 'Support' and stat in support_stats:
-            player_data = player_data[['team', 'player', 'hero', 'role', 'stat', 'stat_amount']]
-        elif hero_role == 'DPS':
-            player_data = player_data[['team', 'player', 'hero', 'role', 'stat', 'stat_amount']]
-        else:
-            continue
+        player_data = player_data[['team', 'player', 'hero', 'role', 'stat', 'stat_amount']]
 
         player_data.columns = ['Team', 'Player', 'Hero', 'Role', 'Stat', 'Stat Amount']
         result = pd.concat([result, player_data], ignore_index=True, sort=False)
@@ -412,6 +401,67 @@ def avg_stats_per_game(stat: str, player: str) -> pd.DataFrame:
     return results[['Hero', 'Avg per game', 'Number of game']]
 
 # %% owl.ipynb 73
+def get_teams_leaderboard(stage=None):
+    """
+    This function calculates the win rate for each team in the dataset, optionally for a specific stage.
+
+    Parameters:
+    stage (str, optional): The stage to consider. If None, all stages are considered.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing the win rate for each team, sorted in descending order.
+    """
+
+    # Get a list of unique teams
+    teams = df['team'].unique()
+
+    # Initialize an empty list to store the win rates
+    winrates = []
+
+    # Calculate the win rate for each team
+    for team in teams:
+        # Get all matches involving the team
+        team_matches = df[(df['team'] == team)]
+
+        # If a stage is specified, filter the matches by stage
+        if stage is not None:
+            # Keep only rows where 'stage' is equal to the specified stage
+            team_matches = team_matches[team_matches['stage'] == stage]
+
+        # If team_matches is empty, continue to the next team
+        if team_matches.empty:
+            continue
+
+        # Get match_ids for the filtered matches
+        match_ids = team_matches['match_id'].unique()
+
+        # Filter map_stats by these match_ids
+        team_map_stats = map_stats[map_stats['match_id'].isin(match_ids)]
+
+        # Count the number of matches won by the team
+        wins = len(team_map_stats[team_map_stats['match_winner'] == team])
+
+        # Calculate the total number of matches played by the team
+        total_matches = len(team_map_stats)
+
+        # Calculate the win rate
+        if total_matches > 0:
+            winrate = (wins / total_matches) * 100
+        else:
+            winrate = 0
+
+        # Append the team and its win rate to the list
+        winrates.append((team, winrate))
+
+    # Convert the list to a DataFrame
+    winrates_df = pd.DataFrame(winrates, columns=['Team', 'Winrate'])
+
+    # Sort the DataFrame by win rate in descending order
+    winrates_df = winrates_df.sort_values('Winrate', ascending=False)
+    
+    return winrates_df
+
+# %% owl.ipynb 75
 def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     """
     This function calculates the total amount of a specific statistic for each hero played by a specific player.
@@ -441,7 +491,7 @@ def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
 
     return result
 
-# %% owl.ipynb 76
+# %% owl.ipynb 78
 def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     """
     This function calculates the total amount of a specific statistic for each player in a specific team.
@@ -464,7 +514,7 @@ def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
 
     return result
 
-# %% owl.ipynb 78
+# %% owl.ipynb 80
 def get_team_scores(team: str, map_type: str = None, map_name: str = None) -> pd.DataFrame:
     """
     This function generates a DataFrame containing the scores of a specific team, optionally filtered by map type and map name.
