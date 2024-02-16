@@ -66,11 +66,18 @@ try:
         st.write('Match stats :')
         st.write(df[df['match_id'] == int(match_id)])
     with viz_tab:
+        match_winner = map_stats[map_stats['match_id'] == int(match_id)]['match_winner'].unique()[0]
+        team_one = map_stats[map_stats['match_id'] == int(match_id)]['team_one_name'].unique()[0]
+        team_two = map_stats[map_stats['match_id'] == int(match_id)]['team_two_name'].unique()[0]
+        start_time = map_stats[map_stats['match_id'] == int(match_id)]['round_start_time'].unique()[0]
+        st.title(f'{team_one} vs {team_two} ({start_time}) - Winner : {match_winner}')
         map_tabs = st.tabs([map_name for map_name in maps])
 
         for i in range(len(maps)):
             with map_tabs[i]:
-                st.subheader(f'Global stats for {maps[i]}')
+                map_winner = map_stats[(map_stats['match_id'] == int(match_id)) & (map_stats['map_name'] == maps[i])][ \
+                    'map_winner'].unique()[0]
+                st.subheader(f'Overall stats for {maps[i]} - Winner : {map_winner}')
                 global_stats = get_match_analysis_all_stats(stage, int(match_id), maps[i])
                 teams = global_stats['Team'].unique()
                 stat_list = global_stats['Stat'].unique()
@@ -122,6 +129,8 @@ try:
 
                 st.markdown("___")
                 st.subheader(f'Time Played by heroes for each teams in {maps[i]}')
+
+                st.write('These bar charts show the time played by each hero for each player of each team (in seconds).')
                 heroes_played = get_match_analysis_heroes_played(stage, int(match_id), maps[i], all=False)
                 teams = heroes_played['Team'].unique()
                 figures = []
@@ -156,10 +165,22 @@ try:
                 st.markdown("___")
                 st.subheader(f'Compare players stats ')
 
+                st.write("""
+                This part allows you to compare the stats of two players from each team. You can choose 
+                to compare the stats of all heroes or the stats of a specific hero.
+                \n
+                By using these charts, you can compare the stats of two players to see who is the best in a specific
+                stat or for a specific hero. With these informations, you can make strategic decisions for the next
+                match, and you can know the strengths and weaknesses of each player.
+                \n
+                We used the same way to normalize the stats as the radar chart before.
+                \n\n\n
+                """)
+
                 team_one_players = heroes_played[heroes_played['Team'] == teams[0]]['Player'].unique()
                 team_two_players = heroes_played[heroes_played['Team'] == teams[1]]['Player'].unique()
 
-                st.write('Choose a player from each team to compare their stats')
+                st.subheader('Configure the comparison :')
 
                 # create 2 columns to display the selectbox for each team
                 col1, col2 = st.columns(2)
