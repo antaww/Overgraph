@@ -60,9 +60,8 @@ try:
                 st.subheader(
                     f'Top {max_heroes_percentage}% ({max_heroes} hero{"es" if max_heroes != 1 else ""}) {order_label} for the '
                     f'stat "{stat}" in the role "{role}"')
-                fig = px.pie(data_role, values=stat, names=data_role.index)
-                pull_values = [0.1 if i == 0 else 0.025 for i in range(max_heroes)]
-                fig.update_traces(textposition='inside', textinfo='percent+label+value', pull=pull_values, hole=0.2)
+                fig = px.treemap(data_role, path=[data_role.index], values=stat)
+                fig.update_traces(hovertemplate='<b>%{label}</b><br>%{value}<extra></extra>')
                 st.plotly_chart(fig)
 except AttributeError:
     # explain that the user goes to the page Heroes without having loaded the data from the Home page
