@@ -50,7 +50,8 @@ try:
     with viz_tab:
         display_page_infos()
         st.subheader(
-            f'Winrate of {team} against other teams on {map_type + ' maps' if map_type else "all types of matches"}')
+            f'Winrate of {team} against other teams on {map_type + " maps" if map_type else "all types of matches"}')
+
         try:
             if map_type:
                 chart_datas = get_team_scores(team, map_type, map_name).set_index('Opponent')[
