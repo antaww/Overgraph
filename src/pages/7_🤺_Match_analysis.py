@@ -24,6 +24,7 @@ def display_page_infos():
 try:
     # team_one_tab, team_two_tab = st.tabs(["Winner Team", "Looser Team"])
     map_stats = st.session_state.map_stats
+    map_stats['match_id'] = map_stats['match_id'].astype(int)
     df = st.session_state.df
     get_match_analysis_all_stats = st.session_state.get_match_analysis_all_stats
     get_match_analysis_heroes_played = st.session_state.get_match_analysis_heroes_played
