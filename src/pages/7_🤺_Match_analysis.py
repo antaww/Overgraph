@@ -24,7 +24,6 @@ def display_page_infos():
 try:
     # team_one_tab, team_two_tab = st.tabs(["Winner Team", "Looser Team"])
     map_stats = st.session_state.map_stats
-    map_stats['match_id'] = map_stats['match_id'].astype(int)
     df = st.session_state.df
     get_match_analysis_all_stats = st.session_state.get_match_analysis_all_stats
     get_match_analysis_heroes_played = st.session_state.get_match_analysis_heroes_played
@@ -57,29 +56,29 @@ try:
     match = st.selectbox('Select a match', match_list)
     match_id = match.split('(')[1].split(')')[0]
 
-    maps = map_stats[map_stats['match_id'] == int(match_id)]['map_name'].unique()
+    maps = map_stats[map_stats['match_id'] == float(match_id)]['map_name'].unique()
 
     df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
 
     with df_tab:
         st.write('Map stats :')
-        st.write(map_stats[map_stats['match_id'] == int(match_id)])
+        st.write(map_stats[map_stats['match_id'] == float(match_id)])
         st.write('Match stats :')
-        st.write(df[df['match_id'] == int(match_id)])
+        st.write(df[df['match_id'] == float(match_id)])
     with viz_tab:
-        match_winner = map_stats[map_stats['match_id'] == int(match_id)]['match_winner'].unique()[0]
-        team_one = map_stats[map_stats['match_id'] == int(match_id)]['team_one_name'].unique()[0]
-        team_two = map_stats[map_stats['match_id'] == int(match_id)]['team_two_name'].unique()[0]
-        start_time = map_stats[map_stats['match_id'] == int(match_id)]['round_start_time'].unique()[0]
+        match_winner = map_stats[map_stats['match_id'] == float(match_id)]['match_winner'].unique()[0]
+        team_one = map_stats[map_stats['match_id'] == float(match_id)]['team_one_name'].unique()[0]
+        team_two = map_stats[map_stats['match_id'] == float(match_id)]['team_two_name'].unique()[0]
+        start_time = map_stats[map_stats['match_id'] == float(match_id)]['round_start_time'].unique()[0]
         st.title(f'{team_one} vs {team_two} ({start_time}) - Winner : {match_winner}')
         map_tabs = st.tabs([map_name for map_name in maps])
 
         for i in range(len(maps)):
             with map_tabs[i]:
-                map_winner = map_stats[(map_stats['match_id'] == int(match_id)) & (map_stats['map_name'] == maps[i])][ \
+                map_winner = map_stats[(map_stats['match_id'] == float(match_id)) & (map_stats['map_name'] == maps[i])][ \
                     'map_winner'].unique()[0]
                 st.subheader(f'Overall stats for {maps[i]} - Winner : {map_winner}')
-                global_stats = get_match_analysis_all_stats(stage, int(match_id), maps[i])
+                global_stats = get_match_analysis_all_stats(stage, float(match_id), maps[i])
                 teams = global_stats['Team'].unique()
                 stat_list = global_stats['Stat'].unique()
 
@@ -132,7 +131,7 @@ try:
                 st.subheader(f'Time Played by heroes for each teams in {maps[i]}')
 
                 st.write('These bar charts show the time played by each hero for each player of each team (in seconds).')
-                heroes_played = get_match_analysis_heroes_played(stage, int(match_id), maps[i], all=False)
+                heroes_played = get_match_analysis_heroes_played(stage, float(match_id), maps[i], all=False)
                 teams = heroes_played['Team'].unique()
                 figures = []
                 players_name = []
@@ -217,32 +216,32 @@ try:
 
                     if team_one_player_hero != 'All heroes':
                         all_heroes = False
-                        team_one_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                        team_one_player_stats = get_match_analysis_heroes_stats(stage, float(match_id), maps[i],
                                                                                 team_one_player, all_heroes,
                                                                                 team_one_player_hero)
                     else:
                         team_one_player_hero = 'All heroes'
                         all_heroes = True
-                        team_one_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                        team_one_player_stats = get_match_analysis_heroes_stats(stage, float(match_id), maps[i],
                                                                                 team_one_player, all_heroes)
 
                     if team_two_player_hero != 'All heroes':
                         all_heroes = False
-                        team_two_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                        team_two_player_stats = get_match_analysis_heroes_stats(stage, float(match_id), maps[i],
                                                                                 team_two_player, all_heroes,
                                                                                 team_two_player_hero)
                     else:
                         team_two_player_hero = 'All heroes'
                         all_heroes = True
-                        team_two_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                        team_two_player_stats = get_match_analysis_heroes_stats(stage, float(match_id), maps[i],
                                                                                 team_two_player, all_heroes)
                 else:
                     team_one_player_hero = 'All heroes'
                     team_two_player_hero = 'All heroes'
                     all_heroes = True
-                    team_one_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                    team_one_player_stats = get_match_analysis_heroes_stats(stage, float(match_id), maps[i],
                                                                             team_one_player, all_heroes)
-                    team_two_player_stats = get_match_analysis_heroes_stats(stage, int(match_id), maps[i],
+                    team_two_player_stats = get_match_analysis_heroes_stats(stage, float(match_id), maps[i],
                                                                             team_two_player, all_heroes)
 
                 # remove lines with stat that are not in common
