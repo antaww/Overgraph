@@ -8,20 +8,43 @@ import re
 import unicodedata
 
 
+# Function to clean the title of the video
 def clean_title(title):
-    # Replace special characters with underscores
+    """
+    This function cleans the title of the video by replacing special characters with underscores and removing accents from Latin characters.
+
+    Parameters:
+    title (str): The title of the video.
+
+    Returns:
+    str: The cleaned title.
+    """
     cleaned_title = re.sub(r'[^\w\s-]', '', title)
     cleaned_title = re.sub(r'[\s]+', '_', cleaned_title)
-    # Remove accents from Latin characters
     cleaned_title = ''.join(c for c in unicodedata.normalize('NFD', cleaned_title) if unicodedata.category(c) != 'Mn')
     return cleaned_title
 
 
-ray.init()  # Start Ray to enable parallel processing
+# Initialize Ray for parallel processing
+ray.init()
 
 
 @ray.remote
 def process_video_parallel(url, total_frames, process_number, cleaned_title, frame_split=20):
+    """
+    This function processes the video in parallel using Ray.
+    It reads the video frame by frame and saves one frame every frame_split frames.
+
+    Parameters:
+    url (str): The URL of the video.
+    total_frames (int): The total number of frames in the video.
+    process_number (int): The process number for parallel processing.
+    cleaned_title (str): The cleaned title of the video.
+    frame_split (int): The number of frames to skip before saving a frame. Default is 20.
+
+    Returns:
+    None
+    """
     print(f"+++ Process {process_number} started for {cleaned_title}")
     cap = cv2.VideoCapture(url)
     num_processes = os.cpu_count()
@@ -50,6 +73,18 @@ def process_video_parallel(url, total_frames, process_number, cleaned_title, fra
 
 
 def process_url(url, frame_split=20, quality="720p"):
+    """
+    This function processes the URL of the video or playlist.
+    It extracts the information of the video or playlist and calls the process_caller function for each video.
+
+    Parameters:
+    url (str): The URL of the video or playlist.
+    frame_split (int): The number of frames to skip before saving a frame. Default is 20.
+    quality (str): The quality of the video. Default is "720p".
+
+    Returns:
+    None
+    """
     print(f"Processing URL: {url} with frame split: {frame_split} and quality: {quality}")
     ydl_opts = {}
     ydl = yt_dlp.YoutubeDL(ydl_opts)
@@ -67,6 +102,18 @@ def process_url(url, frame_split=20, quality="720p"):
 
 
 def process_caller(entry, frame_split: int, quality: str):
+    """
+    This function processes each video in the playlist.
+    It cleans the title of the video, creates a directory with the cleaned title, and calls the process_video_parallel function for parallel processing.
+
+    Parameters:
+    entry (dict): The information of the video.
+    frame_split (int): The number of frames to skip before saving a frame.
+    quality (str): The quality of the video.
+
+    Returns:
+    None
+    """
     video_title = entry['title']
     cleaned_title = clean_title(video_title)
     try:
@@ -84,16 +131,16 @@ def process_caller(entry, frame_split: int, quality: str):
                      range(cpu_count)])
 
 
+# Start the timer (for performance evaluation)
 t1 = timer()
+
+# Set the quality of the video and the number of frames to skip before saving a frame
 quality = "720p"
 frames = 30
-# video_url = "https://youtu.be/05A26mwdmuI?si=xl4iUDQNfRCeUQY3"  # Réunion 5 / 5:54
-# video_url = "https://www.youtube.com/playlist?list=PLN-TcjS0qZKVUwLwwp94oqqBGxiYWgkTV"  # Pubs vs Vie
-# video_url = "https://www.youtube.com/watch?v=hx_xmpZ0HXU"  # OWL 2:14:16
-# video_url = "https://www.youtube.com/playlist?list=PLwnBEhITAFhhJPLEj-XcJBAgM_yMaQpKs"  # OWL Playlist
 
-# if you want to download a playlist, the url should contain "playlist"
-# if you want to download a single video, you should get the url from the share button
-video_url = "https://youtu.be/bceES8u2RrQ"  # Non répertorié perso
+# If you want to download a playlist, the url should contain "playlist"
+# If you want to download a single video, you should get the url from the share button
+video_url = "https://www.youtube.com/playlist?list=PLwnBEhITAFhhJPLEj-XcJBAgM_yMaQpKs"  # Non répertorié perso
 process_url(video_url, frame_split=frames, quality=quality)
+# Print the total time taken for the process
 print("Total Time", timer() - t1)

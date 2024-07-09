@@ -3,13 +3,19 @@ import os
 import altair as alt
 import streamlit as st
 
+# Set the page configuration
 st.set_page_config(
-    page_title="Overgraph - Team VS Teams",
-    page_icon="./src/static/overgraph-logo.png"
+    page_title="Overgraph - Team VS Teams",  # The title of the page
+    page_icon="./src/static/overgraph-logo.png"  # The icon of the page
 )
 
 
 def display_page_infos():
+    """
+    This function displays the information of the page.
+
+    It uses the Streamlit library to display a subheader and a Markdown text.
+    """
     st.subheader('Get team scores against other teams')
     st.markdown("""
                     The collected datas provide a comprehensive overview of one **team's performances against its Overwatch League opponents**. 
@@ -20,18 +26,21 @@ def display_page_infos():
 
 
 try:
-    map_stats = st.session_state.map_stats
+    # Get the dataframe and the function to get player stats from the session state
     df = st.session_state.df
     get_team_scores = st.session_state.get_team_scores
 
+    # Get the list of unique teams and stats from the dataframe
     teams_list = df['team'].unique()
     map_types_list = df['map_type'].str.title().unique()
     # get every 'map' where 'map_type' == map_type
 
+    # Display the page information
     display_page_infos()
     # create a dropdown list with every unique 'stat'
     team = st.selectbox('Select a team', teams_list)
     map_type = st.selectbox('Select a map type (not required)', [''] + list(map_types_list))
+
     if map_type:
         map_names_list = df[df['map_type'].str.lower() == map_type.lower()]['map'].unique()
         map_name = st.selectbox('Select a map (not required)', [''] + list(map_names_list))
@@ -73,7 +82,7 @@ try:
 except AttributeError:
     # explain that the user goes to the page Heroes without having loaded the data from the Home page
     st.error('You need to load the data from the Home page first !')
-    # # create a button to redirect the user to the Home page
+    # create a button to redirect the user to the Home page
     if st.button('Go to Home'):
         home_path = os.path.join(os.getcwd(), 'src/0_🏠_Home.py')
         st.switch_page(home_path)

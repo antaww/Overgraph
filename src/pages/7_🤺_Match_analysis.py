@@ -5,13 +5,19 @@ import streamlit as st
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+# Set the page configuration
 st.set_page_config(
-    page_title="Overgraph - Match analysis",
-    page_icon="./src/static/overgraph-logo.png"
+    page_title="Overgraph - Match analysis",  # The title of the page
+    page_icon="./src/static/overgraph-logo.png"  # The icon of the page
 )
 
 
 def display_page_infos():
+    """
+    This function displays the information of the page.
+
+    It uses the Streamlit library to display a subheader and a markdown text.
+    """
     st.subheader('Analyse a match')
     st.markdown("""
                     The collected datas provide a comprehensive overview of one **team's performances on different maps**.
@@ -22,13 +28,14 @@ def display_page_infos():
 
 
 try:
-    # team_one_tab, team_two_tab = st.tabs(["Winner Team", "Looser Team"])
+    # Get the dataframe and the function to get player stats from the session state
     map_stats = st.session_state.map_stats
     df = st.session_state.df
     get_match_analysis_all_stats = st.session_state.get_match_analysis_all_stats
     get_match_analysis_heroes_played = st.session_state.get_match_analysis_heroes_played
     get_match_analysis_heroes_stats = st.session_state.get_match_analysis_heroes_stats
 
+    # Get the list of unique teams and stats from the dataframe
     teams_list = df['team'].unique()
     stats_list = df['stat'].unique()
 
@@ -130,7 +137,8 @@ try:
                 st.markdown("___")
                 st.subheader(f'Time Played by heroes for each teams in {maps[i]}')
 
-                st.write('These bar charts show the time played by each hero for each player of each team (in seconds).')
+                st.write(
+                    'These bar charts show the time played by each hero for each player of each team (in seconds).')
                 heroes_played = get_match_analysis_heroes_played(stage, float(match_id), maps[i], all=False)
                 teams = heroes_played['Team'].unique()
                 figures = []

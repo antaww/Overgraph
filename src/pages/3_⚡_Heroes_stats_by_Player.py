@@ -3,13 +3,19 @@ import os
 import plotly.express as px
 import streamlit as st
 
+# Set the page configuration
 st.set_page_config(
-    page_title="Overgraph - Heroes stats by Player",
-    page_icon="./src/static/overgraph-logo.png"
+    page_title="Overgraph - Heroes stats by Player",  # The title of the page
+    page_icon="./src/static/overgraph-logo.png"  # The icon of the page
 )
 
 
 def display_page_infos():
+    """
+    This function displays the information of the page.
+
+    It uses the Streamlit library to display a subheader and a markdown text.
+    """
     st.subheader('Get specific stats for every hero of a player')
     st.markdown("""
                 This page provides a comprehensive overview of **each player's performance with each hero based on a specific stat in the Overwatch League**.
@@ -19,17 +25,24 @@ def display_page_infos():
 
 
 try:
+    # Get the dataframe and the function to get player stats from the session state
     df = st.session_state.df
     get_heroes_stat_by_player = st.session_state.get_heroes_stat_by_player
 
+    # Get the list of unique stats from the dataframes
     players_list = df['player'].unique()
     stats_list = df['stat'].unique()
 
     display_page_infos()
-    player = st.selectbox('Select a player', players_list)
+    # Select a stat from the stats list
     stat = st.selectbox('Select a stat', stats_list)
-    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
+    # Select a player from the players list
+    player = st.selectbox('Select a player', players_list)
+    # Get the data for the selected stat and player
     data = get_heroes_stat_by_player(stat, player)
+    # Create tabs for the dataframe and the visualization
+    df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
+
     with df_tab:
         if data.empty:
             st.error('No data available for this player and this stat')
@@ -46,6 +59,7 @@ try:
             total_stats = data[stat]
             total_stats = total_stats.round(2)
             formatted_stat = total_stats.apply(lambda x: "{:,}".format(x))
+            # Create a bar chart with the data
             fig = px.bar(data, x=stat, y=data.index, labels={'x': stat, 'y': 'Hero'}, color=stat,
                          color_continuous_scale='reds')
             fig.update_layout(yaxis={'categoryorder': 'total ascending'})
@@ -66,7 +80,7 @@ try:
 except AttributeError:
     # explain that the user goes to the page Heroes without having loaded the data from the Home page
     st.error('You need to load the data from the Home page first !')
-    # # create a button to redirect the user to the Home page
+    # create a button to redirect the user to the Home page
     if st.button('Go to Home'):
         home_path = os.path.join(os.getcwd(), 'src/0_🏠_Home.py')
         st.switch_page(home_path)

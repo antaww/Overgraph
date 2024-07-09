@@ -2,13 +2,19 @@ import os
 import streamlit as st
 import plotly.express as px
 
+# Set the page configuration
 st.set_page_config(
-    page_title="Overgraph - Heroes stats",
-    page_icon="./src/static/overgraph-logo.png"
+    page_title="Overgraph - Heroes stats",  # The title of the page
+    page_icon="./src/static/overgraph-logo.png"  # The icon of the page
 )
 
 
 def display_page_infos():
+    """
+    This function displays the information of the page.
+
+    It uses the Streamlit library to display a subheader and a Markdown text.
+    """
     st.subheader('Get specific stats for every hero')
     st.markdown("""
                     The collected datas provide a comprehensive overview of **every hero performances depending on a stat in the Overwatch League**. 
@@ -18,14 +24,18 @@ def display_page_infos():
 
 
 try:
+    # Get the dataframe and the function to get hero stats from the session state
     df = st.session_state.df
     get_heroes_stat = st.session_state.get_heroes_stat
-
+    # Get the list of unique stats from the dataframe
     stats_list = df['stat'].unique()
-
+    # Display the page information
     display_page_infos()
+    # Select a stat from the stats list
     stat = st.selectbox('Select a stat', stats_list)
+    # Create tabs for the dataframe and the visualization
     df_tab, viz_tab = st.tabs(["Dataframe", "Visualization"])
+    # Get the data for the selected stat
     data = get_heroes_stat(stat)
 
     with df_tab:
@@ -64,9 +74,9 @@ try:
                 fig.update_traces(hovertemplate='<b>%{label}</b><br>%{value}<extra></extra>')
                 st.plotly_chart(fig)
 except AttributeError:
-    # explain that the user goes to the page Heroes without having loaded the data from the Home page
+    # Display an error message if the data is not loaded from the Home page
     st.error('You need to load the data from the Home page first !')
-    # # create a button to redirect the user to the Home page
+    # Create a button to redirect the user to the Home page
     if st.button('Go to Home'):
         home_path = os.path.join(os.getcwd(), 'src/0_🏠_Home.py')
         st.switch_page(home_path)

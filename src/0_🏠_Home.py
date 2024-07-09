@@ -1,9 +1,12 @@
+# Import necessary libraries
 import pandas as pd
 import streamlit as st
+# Import necessary functions from owl_module
 from owl_module import df, get_heroes_stat, get_heroes_stat_by_player, get_players_stat_by_team, get_team_scores, \
     map_stats, get_players_stat, get_team_profile, get_match_analysis_heroes_played, get_match_analysis_all_stats, \
     get_teams_leaderboard, get_match_analysis_heroes_stats, get_switches
 
+# Set session state variables for Streamlit
 st.session_state.map_stats = map_stats
 st.session_state.df = df
 st.session_state.get_heroes_stat = get_heroes_stat
@@ -17,20 +20,22 @@ st.session_state.get_match_analysis_heroes_played = get_match_analysis_heroes_pl
 st.session_state.get_teams_leaderboard = get_teams_leaderboard
 st.session_state.get_match_analysis_heroes_stats = get_match_analysis_heroes_stats
 st.session_state.get_switches = get_switches
-
+# Set page configuration for Streamlit
 st.set_page_config(
     page_title="Overgraph",
     page_icon="./src/static/overgraph-logo.png",
 )
 
+# Create three columns for layout
 col1, col2, col3 = st.columns(3)
 
 with col1:
     st.write('')
 with col2:
-    st.image('src/static/overgraph-removebg-preview.png', use_column_width=True)
+    st.image('src/static/overgraph-logo-title.png', use_column_width=True)
 with col3:
     st.write('')
+# Write Markdown text to the page
 st.markdown("""
             ### ☝️🤓 Welcome to :red[Overgraph], a website regrouping every Overwatch League stats.
             ##### Use Overgraph to get a precise analysis of the Overwatch League data like heroes stats, players stats, teams stats and matches analysis.

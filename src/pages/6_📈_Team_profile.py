@@ -6,13 +6,19 @@ import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
+# Set the page configuration
 st.set_page_config(
-    page_title="Overgraph - Team profile",
-    page_icon="./src/static/overgraph-logo.png"
+    page_title="Overgraph - Team profile",  # The title of the page
+    page_icon="./src/static/overgraph-logo.png"  # The icon of the page
 )
 
 
 def display_page_infos():
+    """
+    This function displays the information of the page.
+
+    It uses the Streamlit library to display a subheader and a Markdown text.
+    """
     st.subheader('Get team scores against other teams')
     st.markdown("""
                         This page provides a detailed profile of **a team's performance in the Overwatch League**.
@@ -24,6 +30,27 @@ def display_page_infos():
 def double_y_lines(dataframe: pd.DataFrame, title: str, x: str, y1: str, y2: str, colory1: str, colory2: str,
                    colormean: str, second_title_condition: bool = False, second_title: str = None,
                    mode: str = 'lines+markers') -> plt.Figure:
+    """
+    This function creates a plot with two y-axes.
+
+    It uses the Plotly library to create the plot.
+
+    Args:
+        dataframe: The dataframe containing the data to plot.
+        title: The title of the plot.
+        x: The column in the dataframe to use for the x-axis.
+        y1: The column in the dataframe to use for the primary y-axis.
+        y2: The column in the dataframe to use for the secondary y-axis.
+        colory1: The color to use for the first trace.
+        colory2: The color to use for the second trace.
+        colormean: The color to use for the mean line.
+        second_title_condition: A condition to determine if the second title should be used.
+        second_title: The second title to use if the condition is True.
+        mode: The mode to use for the traces.
+
+    Returns:
+        A Plotly Figure object with the plot.
+    """
     # Create a subplot with two y-axes
     figure = make_subplots(specs=[[{"secondary_y": True}]])
 
@@ -61,16 +88,19 @@ def double_y_lines(dataframe: pd.DataFrame, title: str, x: str, y1: str, y2: str
 
 
 try:
+    # Get the dataframe and the function to get player stats from the session state
     map_stats = st.session_state.map_stats
     df = st.session_state.df
     get_team_profile = st.session_state.get_team_profile
 
+    # Get the list of unique teams and stats from the dataframe
     teams_list = df['team'].unique()
     stats_list = df['stat'].unique()
     stages_list = df['stage'].unique()
 
     display_page_infos()
 
+    # Select a team and a stat from the dropdown lists
     team = st.selectbox('Select a team', teams_list)
     stat = st.selectbox('Select a stat', stats_list)
     stage = st.selectbox('Select a stage (not required)', [''] + list(stages_list))
