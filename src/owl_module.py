@@ -84,76 +84,81 @@ datas = {
     # Google Docs
     # phs_2023.csv
     'phs_2023.csv': '1fKsztKPxxDbBdmLLH0WCV_GUsFcJhBph',
+    # https://drive.google.com/file/d/1peF54UifbGSN9skYG2Ky2k7lMyUgIPO3/view?usp=sharing
+    # Google Docs
+    # switch.csv
+    'switch.csv': '1peF54UifbGSN9skYG2Ky2k7lMyUgIPO3'
 }
 
 url = 'https://drive.google.com/uc?export=download&id=%s'
 
 # %% owl.ipynb 5
-map_stats = pd.read_csv(f'{owl_path}/match_map_stats.csv')
-# map_stats = pd.read_csv(url % datas['match_map_stats.csv'])
+# map_stats = pd.read_csv(f'{owl_path}/match_map_stats.csv')
+map_stats = pd.read_csv(url % datas['match_map_stats.csv'])
 
 # %% owl.ipynb 7
-df_2018_s1 = pd.read_csv(f'{owl_path}/phs_2018_stage_1.csv')
-# df_2018_s1 = pd.read_csv(url % datas['phs_2018_stage_1.csv'])
+# df_2018_s1 = pd.read_csv(f'{owl_path}/phs_2018_stage_1.csv')
+df_2018_s1 = pd.read_csv(url % datas['phs_2018_stage_1.csv'])
 
 # %% owl.ipynb 10
-df_2018_s2 = pd.read_csv(f'{owl_path}/phs_2018_stage_2.csv')
-# df_2018_s2 = pd.read_csv(url % datas['phs_2018_stage_2.csv'])
+# df_2018_s2 = pd.read_csv(f'{owl_path}/phs_2018_stage_2.csv')
+df_2018_s2 = pd.read_csv(url % datas['phs_2018_stage_2.csv'])
 
 # %% owl.ipynb 13
-df_2018_s3 = pd.read_csv(f'{owl_path}/phs_2018_stage_3.csv')
-# df_2018_s3 = pd.read_csv(url % datas['phs_2018_stage_3.csv'])
+# df_2018_s3 = pd.read_csv(f'{owl_path}/phs_2018_stage_3.csv')
+df_2018_s3 = pd.read_csv(url % datas['phs_2018_stage_3.csv'])
 
 # %% owl.ipynb 16
-df_2018_s4 = pd.read_csv(f'{owl_path}/phs_2018_stage_4.csv')
-# df_2018_s4 = pd.read_csv(url % datas['phs_2018_stage_4.csv'])
+# df_2018_s4 = pd.read_csv(f'{owl_path}/phs_2018_stage_4.csv')
+df_2018_s4 = pd.read_csv(url % datas['phs_2018_stage_4.csv'])
 
 # %% owl.ipynb 19
-df_2018_po = pd.read_csv(f'{owl_path}/phs_2018_playoffs.csv')
-# df_2018_po = pd.read_csv(url % datas['phs_2018_playoffs.csv'])
+# df_2018_po = pd.read_csv(f'{owl_path}/phs_2018_playoffs.csv')
+df_2018_po = pd.read_csv(url % datas['phs_2018_playoffs.csv'])
 
 # %% owl.ipynb 22
-df_2019_s1 = pd.read_csv(f'{owl_path}/phs_2019_stage_1.csv')
-# df_2019_s1 = pd.read_csv(url % datas['phs_2019_stage_1.csv'])
+# df_2019_s1 = pd.read_csv(f'{owl_path}/phs_2019_stage_1.csv')
+df_2019_s1 = pd.read_csv(url % datas['phs_2019_stage_1.csv'])
 
 # %% owl.ipynb 25
-df_2019_s2 = pd.read_csv(f'{owl_path}/phs_2019_stage_2.csv')
-# df_2019_s2 = pd.read_csv(url % datas['phs_2019_stage_2.csv'])
+# df_2019_s2 = pd.read_csv(f'{owl_path}/phs_2019_stage_2.csv')
+df_2019_s2 = pd.read_csv(url % datas['phs_2019_stage_2.csv'])
 
 # %% owl.ipynb 28
-df_2019_s3 = pd.read_csv(f'{owl_path}/phs_2019_stage_3.csv')
-# df_2019_s3 = pd.read_csv(url % datas['phs_2019_stage_3.csv'])
+# df_2019_s3 = pd.read_csv(f'{owl_path}/phs_2019_stage_3.csv')
+df_2019_s3 = pd.read_csv(url % datas['phs_2019_stage_3.csv'])
 
 # %% owl.ipynb 31
-df_2019_s4 = pd.read_csv(f'{owl_path}/phs_2019_stage_4.csv')
-# df_2019_s4 = pd.read_csv(url % datas['phs_2019_stage_4.csv'])
+# df_2019_s4 = pd.read_csv(f'{owl_path}/phs_2019_stage_4.csv')
+df_2019_s4 = pd.read_csv(url % datas['phs_2019_stage_4.csv'])
 
 # %% owl.ipynb 34
-df_2019_po = pd.read_csv(f'{owl_path}/phs_2019_playoffs.csv')
-# df_2019_po = pd.read_csv(url % datas['phs_2019_playoffs.csv'])
+# df_2019_po = pd.read_csv(f'{owl_path}/phs_2019_playoffs.csv')
+df_2019_po = pd.read_csv(url % datas['phs_2019_playoffs.csv'])
 
 # %% owl.ipynb 37
-df_2020_s1 = pd.read_csv(f'{owl_path}/phs_2020_1.csv')
-# df_2020_s1 = pd.read_csv(url % datas['phs_2020_1.csv'])
+# df_2020_s1 = pd.read_csv(f'{owl_path}/phs_2020_1.csv')
+df_2020_s1 = pd.read_csv(url % datas['phs_2020_1.csv'])
 
 # %% owl.ipynb 40
-df_2020_s2 = pd.read_csv(f'{owl_path}/phs_2020_2.csv')
-# df_2020_s2 = pd.read_csv(url % datas['phs_2020_2.csv'])
+# df_2020_s2 = pd.read_csv(f'{owl_path}/phs_2020_2.csv')
+df_2020_s2 = pd.read_csv(url % datas['phs_2020_2.csv'])
 
 # %% owl.ipynb 43
-df_2021 = pd.read_csv(f'{owl_path}/phs_2021_1.csv')
-# df_2021 = pd.read_csv(url % datas['phs_2021_1.csv'])
+# df_2021 = pd.read_csv(f'{owl_path}/phs_2021_1.csv')
+df_2021 = pd.read_csv(url % datas['phs_2021_1.csv'])
 
 # %% owl.ipynb 46
-df_2022 = pd.read_csv(f'{owl_path}/phs_2022.csv')
-# df_2022 = pd.read_csv(url % datas['phs_2022.csv'])
+# df_2022 = pd.read_csv(f'{owl_path}/phs_2022.csv')
+df_2022 = pd.read_csv(url % datas['phs_2022.csv'])
 
 # %% owl.ipynb 49
-df_2023 = pd.read_csv(f'{owl_path}/phs_2023.csv')
-# df_2023 = pd.read_csv(url % datas['phs_2023.csv'])
+# df_2023 = pd.read_csv(f'{owl_path}/phs_2023.csv')
+df_2023 = pd.read_csv(url % datas['phs_2023.csv'])
 
 # %% owl.ipynb 52
-df_switch = pd.read_csv(f'{owl_path}/switch.csv')
+# df_switch = pd.read_csv(f'{owl_path}/switch.csv')
+df_switch = pd.read_csv(url % datas['switch.csv'])
 
 # %% owl.ipynb 54
 # merge every dataframes in one
@@ -248,7 +253,6 @@ def get_match_analysis_heroes_played(stage: str, match: int, map: str, all: bool
 
     return result
 
-
 # %% owl.ipynb 65
 def get_match_analysis_all_stats(stage: str, match: int, map: str) -> pd.DataFrame:
     # Filter the dataframe based on the stage and match_id
@@ -272,7 +276,6 @@ def get_match_analysis_all_stats(stage: str, match: int, map: str) -> pd.DataFra
         result = pd.concat([result, player_data], ignore_index=True, sort=False)
 
     return result
-
 
 # %% owl.ipynb 67
 def get_match_analysis_heroes_stats(stage: str, match: int, map: str, player: str, all: bool,
@@ -309,7 +312,6 @@ def get_match_analysis_heroes_stats(stage: str, match: int, map: str, player: st
         result = pd.concat([result, player_data], ignore_index=True, sort=False)
 
     return result
-
 
 # %% owl.ipynb 69
 def get_team_profile(team: str, stat: str, stage: str = None) -> pd.DataFrame:
@@ -397,7 +399,6 @@ def get_team_profile(team: str, stat: str, stage: str = None) -> pd.DataFrame:
 
     return result
 
-
 # %% owl.ipynb 71
 def get_heroes_stat(stat: str) -> pd.DataFrame:
     """
@@ -461,7 +462,6 @@ def get_players_stat(stat: str) -> pd.DataFrame:
 
     return result
 
-
 # %% owl.ipynb 75
 def avg_stats_per_game(stat: str, player: str) -> pd.DataFrame:
     """
@@ -493,7 +493,6 @@ def avg_stats_per_game(stat: str, player: str) -> pd.DataFrame:
     results = pd.concat([results, avg_per_game], ignore_index=True, sort=False)
 
     return results[['Hero', 'Avg per game', 'Number of game']]
-
 
 # %% owl.ipynb 76
 def get_teams_leaderboard(stage=None):
@@ -556,7 +555,6 @@ def get_teams_leaderboard(stage=None):
 
     return winrates_df
 
-
 # %% owl.ipynb 78
 def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     """
@@ -587,7 +585,6 @@ def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
 
     return result
 
-
 # %% owl.ipynb 81
 def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     """
@@ -610,7 +607,6 @@ def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     result = result.to_frame()
 
     return result
-
 
 # %% owl.ipynb 83
 def get_team_scores(team: str, map_type: str = None, map_name: str = None) -> pd.DataFrame:
@@ -690,7 +686,6 @@ def get_team_scores(team: str, map_type: str = None, map_name: str = None) -> pd
 
     results = results.set_index('Team')
     return results
-
 
 # %% owl.ipynb 84
 def get_switches() -> pd.DataFrame:
