@@ -1,4 +1,4 @@
-<img src="https://overgraph.streamlit.app:443/~/+/media/4e13515ded64dc92409a16d07da67c67ffd8a1ab08534c303300e87b.png" alt="Overgraph" width="300"/>
+<img src="src/static/overgraph-logo-title.png" alt="Overgraph" width="300"/>
 
 
 ## 🫸 Welcome to Overgraph, a website regrouping every Overwatch League stats to help you make the best analysis of the game.
