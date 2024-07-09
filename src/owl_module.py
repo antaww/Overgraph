@@ -3,7 +3,8 @@
 # %% auto 0
 __all__ = ['map_stats', 'df', 'get_match_analysis_heroes_played', 'get_match_analysis_all_stats',
            'get_match_analysis_heroes_stats', 'get_team_profile', 'get_heroes_stat', 'get_players_stat',
-           'get_teams_leaderboard', 'get_heroes_stat_by_player', 'get_players_stat_by_team', 'get_team_scores']
+           'get_teams_leaderboard', 'get_heroes_stat_by_player', 'get_players_stat_by_team', 'get_team_scores',
+           'get_switches']
 
 # %% owl.ipynb 0
 import dateutil.parser as dparser
@@ -19,129 +20,148 @@ owl_path = f'{path}/src/datas/owl'
 
 # %% owl.ipynb 3
 datas = {
-# https://drive.google.com/file/d/1tPx0GVfdcdJUEl57ytA_uJtArKszI4vJ/view?usp=sharing
-# Google Docs
-# match_map_stats.csv
+    # https://drive.google.com/file/d/1tPx0GVfdcdJUEl57ytA_uJtArKszI4vJ/view?usp=sharing
+    # Google Docs
+    # match_map_stats.csv
     'match_map_stats.csv': '1tPx0GVfdcdJUEl57ytA_uJtArKszI4vJ',
-# https://drive.google.com/file/d/1Gi0mbtmjOpcGeEBYjb9iAQiodIxd9cw_/view?usp=sharing
-# Google Docs
-# phs_2018_playoffs.csv
+    # https://drive.google.com/file/d/1Gi0mbtmjOpcGeEBYjb9iAQiodIxd9cw_/view?usp=sharing
+    # Google Docs
+    # phs_2018_playoffs.csv
     'phs_2018_playoffs.csv': '1Gi0mbtmjOpcGeEBYjb9iAQiodIxd9cw_',
-# https://drive.google.com/file/d/1SfBAigf9vclOCyHYP2-uyp24J5mbdLN7/view?usp=sharing
-# Google Docs
-# phs_2018_stage_1.csv
+    # https://drive.google.com/file/d/1SfBAigf9vclOCyHYP2-uyp24J5mbdLN7/view?usp=sharing
+    # Google Docs
+    # phs_2018_stage_1.csv
     'phs_2018_stage_1.csv': '1SfBAigf9vclOCyHYP2-uyp24J5mbdLN7',
-# https://drive.google.com/file/d/1PUQKvE37wp14NII8FXqsTigTlSOmYtg-/view?usp=sharing
-# Google Docs
-# phs_2018_stage_2.csv
+    # https://drive.google.com/file/d/1PUQKvE37wp14NII8FXqsTigTlSOmYtg-/view?usp=sharing
+    # Google Docs
+    # phs_2018_stage_2.csv
     'phs_2018_stage_2.csv': '1PUQKvE37wp14NII8FXqsTigTlSOmYtg-',
-# https://drive.google.com/file/d/1HhPL5MODUIkAABjgBOkIZfSuC7g4gKaG/view?usp=sharing
-# Google Docs
-# phs_2018_stage_3.csv
+    # https://drive.google.com/file/d/1HhPL5MODUIkAABjgBOkIZfSuC7g4gKaG/view?usp=sharing
+    # Google Docs
+    # phs_2018_stage_3.csv
     'phs_2018_stage_3.csv': '1HhPL5MODUIkAABjgBOkIZfSuC7g4gKaG',
-# https://drive.google.com/file/d/1xhUj33D7kkZsEMU6UaORBAFs3jSDrI17/view?usp=sharing
-# Google Docs
-# phs_2018_stage_4.csv
+    # https://drive.google.com/file/d/1xhUj33D7kkZsEMU6UaORBAFs3jSDrI17/view?usp=sharing
+    # Google Docs
+    # phs_2018_stage_4.csv
     'phs_2018_stage_4.csv': '1xhUj33D7kkZsEMU6UaORBAFs3jSDrI17',
-# https://drive.google.com/file/d/13Knx8WlSemwDNYXd1YT0mYpljjHk-R4Y/view?usp=sharing
-# Google Docs
-# phs_2019_playoffs.csv
+    # https://drive.google.com/file/d/13Knx8WlSemwDNYXd1YT0mYpljjHk-R4Y/view?usp=sharing
+    # Google Docs
+    # phs_2019_playoffs.csv
     'phs_2019_playoffs.csv': '13Knx8WlSemwDNYXd1YT0mYpljjHk-R4Y',
-# https://drive.google.com/file/d/1dCGQsAvS9xaGIrEhHhjf9NDVTL2hk2qP/view?usp=sharing
-# Google Docs
-# phs_2019_stage_1.csv
+    # https://drive.google.com/file/d/1dCGQsAvS9xaGIrEhHhjf9NDVTL2hk2qP/view?usp=sharing
+    # Google Docs
+    # phs_2019_stage_1.csv
     'phs_2019_stage_1.csv': '1dCGQsAvS9xaGIrEhHhjf9NDVTL2hk2qP',
-# https://drive.google.com/file/d/1yavjUuNO_O7fxT9PGZS8AyQpau_eZpWj/view?usp=sharing
-# Google Docs
-# phs_2019_stage_2.csv
+    # https://drive.google.com/file/d/1yavjUuNO_O7fxT9PGZS8AyQpau_eZpWj/view?usp=sharing
+    # Google Docs
+    # phs_2019_stage_2.csv
     'phs_2019_stage_2.csv': '1yavjUuNO_O7fxT9PGZS8AyQpau_eZpWj',
-# https://drive.google.com/file/d/1WS7btQ8HC_t_t9OAp4UCQd5O1cdGsvVA/view?usp=sharing
-# Google Docs
-# phs_2019_stage_3.csv
+    # https://drive.google.com/file/d/1WS7btQ8HC_t_t9OAp4UCQd5O1cdGsvVA/view?usp=sharing
+    # Google Docs
+    # phs_2019_stage_3.csv
     'phs_2019_stage_3.csv': '1WS7btQ8HC_t_t9OAp4UCQd5O1cdGsvVA',
-# https://drive.google.com/file/d/1fWNKo0HfWM2CQzi-6WbUK1duvBd0NQiN/view?usp=sharing
-# Google Docs
-# phs_2019_stage_4.csv
+    # https://drive.google.com/file/d/1fWNKo0HfWM2CQzi-6WbUK1duvBd0NQiN/view?usp=sharing
+    # Google Docs
+    # phs_2019_stage_4.csv
     'phs_2019_stage_4.csv': '1fWNKo0HfWM2CQzi-6WbUK1duvBd0NQiN',
-# https://drive.google.com/file/d/1z7_MiS63noOB26Kxtbf5mwbVzTUPv1DG/view?usp=sharing
-# Google Docs
-# phs_2020_1.csv
+    # https://drive.google.com/file/d/1z7_MiS63noOB26Kxtbf5mwbVzTUPv1DG/view?usp=sharing
+    # Google Docs
+    # phs_2020_1.csv
     'phs_2020_1.csv': '1z7_MiS63noOB26Kxtbf5mwbVzTUPv1DG',
-# https://drive.google.com/file/d/1ZWAvP5eDs2EDYiuuZLcBWRI8PgY2aiSD/view?usp=sharing
-# Google Docs
-# phs_2020_2.csv
+    # https://drive.google.com/file/d/1ZWAvP5eDs2EDYiuuZLcBWRI8PgY2aiSD/view?usp=sharing
+    # Google Docs
+    # phs_2020_2.csv
     'phs_2020_2.csv': '1ZWAvP5eDs2EDYiuuZLcBWRI8PgY2aiSD',
-# https://drive.google.com/file/d/1SJ5T4_8YyE-fv8flntKoboXToEupP1qE/view?usp=sharing
-# Google Docs
-# phs_2021_1.csv
+    # https://drive.google.com/file/d/1SJ5T4_8YyE-fv8flntKoboXToEupP1qE/view?usp=sharing
+    # Google Docs
+    # phs_2021_1.csv
     'phs_2021_1.csv': '1SJ5T4_8YyE-fv8flntKoboXToEupP1qE',
-# https://drive.google.com/file/d/1QN5kH1ZwPUwcxjH_XqB2OadfL4qB6IFX/view?usp=sharing
-# Google Docs
-# phs_2022.csv
+    # https://drive.google.com/file/d/1QN5kH1ZwPUwcxjH_XqB2OadfL4qB6IFX/view?usp=sharing
+    # Google Docs
+    # phs_2022.csv
     'phs_2022.csv': '1QN5kH1ZwPUwcxjH_XqB2OadfL4qB6IFX',
-# https://drive.google.com/file/d/1fKsztKPxxDbBdmLLH0WCV_GUsFcJhBph/view?usp=sharing
-# Google Docs
-# phs_2023.csv
+    # https://drive.google.com/file/d/1fKsztKPxxDbBdmLLH0WCV_GUsFcJhBph/view?usp=sharing
+    # Google Docs
+    # phs_2023.csv
     'phs_2023.csv': '1fKsztKPxxDbBdmLLH0WCV_GUsFcJhBph',
 }
 
 url = 'https://drive.google.com/uc?export=download&id=%s'
 
 # %% owl.ipynb 5
-map_stats = pd.read_csv(url % datas['match_map_stats.csv'])
+map_stats = pd.read_csv(f'{owl_path}/match_map_stats.csv')
+# map_stats = pd.read_csv(url % datas['match_map_stats.csv'])
 
 # %% owl.ipynb 7
-df_2018_s1 = pd.read_csv(url % datas['phs_2018_stage_1.csv'])
+df_2018_s1 = pd.read_csv(f'{owl_path}/phs_2018_stage_1.csv')
+# df_2018_s1 = pd.read_csv(url % datas['phs_2018_stage_1.csv'])
 
 # %% owl.ipynb 10
-df_2018_s2 = pd.read_csv(url % datas['phs_2018_stage_2.csv'])
+df_2018_s2 = pd.read_csv(f'{owl_path}/phs_2018_stage_2.csv')
+# df_2018_s2 = pd.read_csv(url % datas['phs_2018_stage_2.csv'])
 
 # %% owl.ipynb 13
-df_2018_s3 = pd.read_csv(url % datas['phs_2018_stage_3.csv'])
+df_2018_s3 = pd.read_csv(f'{owl_path}/phs_2018_stage_3.csv')
+# df_2018_s3 = pd.read_csv(url % datas['phs_2018_stage_3.csv'])
 
 # %% owl.ipynb 16
-df_2018_s4 = pd.read_csv(url % datas['phs_2018_stage_4.csv'])
+df_2018_s4 = pd.read_csv(f'{owl_path}/phs_2018_stage_4.csv')
+# df_2018_s4 = pd.read_csv(url % datas['phs_2018_stage_4.csv'])
 
 # %% owl.ipynb 19
-df_2018_po = pd.read_csv(url % datas['phs_2018_playoffs.csv'])
+df_2018_po = pd.read_csv(f'{owl_path}/phs_2018_playoffs.csv')
+# df_2018_po = pd.read_csv(url % datas['phs_2018_playoffs.csv'])
 
 # %% owl.ipynb 22
-df_2019_s1 = pd.read_csv(url % datas['phs_2019_stage_1.csv'])
+df_2019_s1 = pd.read_csv(f'{owl_path}/phs_2019_stage_1.csv')
+# df_2019_s1 = pd.read_csv(url % datas['phs_2019_stage_1.csv'])
 
 # %% owl.ipynb 25
-df_2019_s2 = pd.read_csv(url % datas['phs_2019_stage_2.csv'])
+df_2019_s2 = pd.read_csv(f'{owl_path}/phs_2019_stage_2.csv')
+# df_2019_s2 = pd.read_csv(url % datas['phs_2019_stage_2.csv'])
 
 # %% owl.ipynb 28
-df_2019_s3 = pd.read_csv(url % datas['phs_2019_stage_3.csv'])
+df_2019_s3 = pd.read_csv(f'{owl_path}/phs_2019_stage_3.csv')
+# df_2019_s3 = pd.read_csv(url % datas['phs_2019_stage_3.csv'])
 
 # %% owl.ipynb 31
-df_2019_s4 = pd.read_csv(url % datas['phs_2019_stage_4.csv'])
+df_2019_s4 = pd.read_csv(f'{owl_path}/phs_2019_stage_4.csv')
+# df_2019_s4 = pd.read_csv(url % datas['phs_2019_stage_4.csv'])
 
 # %% owl.ipynb 34
-df_2019_po = pd.read_csv(url % datas['phs_2019_playoffs.csv'])
+df_2019_po = pd.read_csv(f'{owl_path}/phs_2019_playoffs.csv')
+# df_2019_po = pd.read_csv(url % datas['phs_2019_playoffs.csv'])
 
 # %% owl.ipynb 37
-df_2020_s1 = pd.read_csv(url % datas['phs_2020_1.csv'])
+df_2020_s1 = pd.read_csv(f'{owl_path}/phs_2020_1.csv')
+# df_2020_s1 = pd.read_csv(url % datas['phs_2020_1.csv'])
 
 # %% owl.ipynb 40
-df_2020_s2 = pd.read_csv(url % datas['phs_2020_2.csv'])
+df_2020_s2 = pd.read_csv(f'{owl_path}/phs_2020_2.csv')
+# df_2020_s2 = pd.read_csv(url % datas['phs_2020_2.csv'])
 
 # %% owl.ipynb 43
-df_2021 = pd.read_csv(url % datas['phs_2021_1.csv'])
+df_2021 = pd.read_csv(f'{owl_path}/phs_2021_1.csv')
+# df_2021 = pd.read_csv(url % datas['phs_2021_1.csv'])
 
 # %% owl.ipynb 46
-df_2022 = pd.read_csv(url % datas['phs_2022.csv'])
+df_2022 = pd.read_csv(f'{owl_path}/phs_2022.csv')
+# df_2022 = pd.read_csv(url % datas['phs_2022.csv'])
 
 # %% owl.ipynb 49
-df_2023 = pd.read_csv(url % datas['phs_2023.csv'])
+df_2023 = pd.read_csv(f'{owl_path}/phs_2023.csv')
+# df_2023 = pd.read_csv(url % datas['phs_2023.csv'])
 
 # %% owl.ipynb 52
+df_switch = pd.read_csv(f'{owl_path}/switch.csv')
+
+# %% owl.ipynb 54
 # merge every dataframes in one
 df = pd.concat(
     [df_2018_s1, df_2018_s2, df_2018_s3, df_2018_s4, df_2018_po, df_2019_s1, df_2019_s2, df_2019_s3, df_2019_s4,
      df_2019_po, df_2020_s1, df_2020_s2, df_2021, df_2022, df_2023])
 
-# %% owl.ipynb 55
+# %% owl.ipynb 57
 df.replace({'hero': 'McCree'}, 'Cassidy', inplace=True)
 df.replace({'hero': 'Lucio'}, 'Lúcio', inplace=True)
 df.replace({'hero': 'Torbjorn'}, 'Torbjörn', inplace=True)
@@ -204,7 +224,7 @@ df.replace({'role': 'All Heroes'}, 'All', inplace=True)
 # map_stats['round_end_time'] = map_stats['round_end_time'].apply(lambda x: dparser.parse(x, fuzzy=True))
 # map_stats.to_csv(f'{owl_path}/match_map_stats.csv', index=False)
 
-# %% owl.ipynb 61
+# %% owl.ipynb 63
 def get_match_analysis_heroes_played(stage: str, match: int, map: str, all: bool) -> pd.DataFrame:
     # Filter the dataframe based on the stage and match_id
     match_data = df[(df['stage'] == stage) & (df['match_id'] == match) & (df['map'] == map)]
@@ -228,7 +248,8 @@ def get_match_analysis_heroes_played(stage: str, match: int, map: str, all: bool
 
     return result
 
-# %% owl.ipynb 63
+
+# %% owl.ipynb 65
 def get_match_analysis_all_stats(stage: str, match: int, map: str) -> pd.DataFrame:
     # Filter the dataframe based on the stage and match_id
     match_data = df[(df['stage'] == stage) & (df['match_id'] == match) & (df['map'] == map)]
@@ -238,10 +259,10 @@ def get_match_analysis_all_stats(stage: str, match: int, map: str) -> pd.DataFra
         'All Damage Done', 'Assists', 'Eliminations', 'Eliminations per Life', 'Deaths', 'Final Blows',
         'Hero Damage Done', 'Time Played', 'Ultimates Used', 'Objective Kills', 'Weapon Accuracy',
         'Average Time Alive', 'Damage Blocked', 'Healing Done', 'Players Saved']
-    
+
     # get all these stat for the player : 'Team', 'Player', 'Hero', 'Role', 'Stat', 'Stat Amount'
     result = pd.DataFrame(columns=['Team', 'Player', 'Hero', 'Role', 'Stat', 'Stat Amount'])
-    
+
     for stat in stats_list:
         player_data = match_data[match_data['stat'] == stat]
         # Filter the data based on the 'all' parameter
@@ -249,10 +270,11 @@ def get_match_analysis_all_stats(stage: str, match: int, map: str) -> pd.DataFra
         player_data = player_data[['team', 'player', 'hero', 'role', 'stat', 'stat_amount']]
         player_data.columns = ['Team', 'Player', 'Hero', 'Role', 'Stat', 'Stat Amount']
         result = pd.concat([result, player_data], ignore_index=True, sort=False)
-        
+
     return result
 
-# %% owl.ipynb 65
+
+# %% owl.ipynb 67
 def get_match_analysis_heroes_stats(stage: str, match: int, map: str, player: str, all: bool,
                                     hero: str = None) -> pd.DataFrame:
     # Filter the dataframe based on the stage and match_id
@@ -288,7 +310,8 @@ def get_match_analysis_heroes_stats(stage: str, match: int, map: str, player: st
 
     return result
 
-# %% owl.ipynb 67
+
+# %% owl.ipynb 69
 def get_team_profile(team: str, stat: str, stage: str = None) -> pd.DataFrame:
     """
     This function generates a profile for a given team, based on a specific statistic and optionally for a specific stage.
@@ -374,7 +397,8 @@ def get_team_profile(team: str, stat: str, stage: str = None) -> pd.DataFrame:
 
     return result
 
-# %% owl.ipynb 69
+
+# %% owl.ipynb 71
 def get_heroes_stat(stat: str) -> pd.DataFrame:
     """
     This function calculates the total amount of a specific statistic for each hero in the dataset.
@@ -397,21 +421,21 @@ def get_heroes_stat(stat: str) -> pd.DataFrame:
     # 
     # # Convert the Series to a DataFrame
     # result = result.to_frame()
-    
+
     # get the sum of the stat for each hero : 'Hero', 'Role', 'Stat', 'Stat Amount'
     result = result.groupby(['hero', 'role', 'stat'])['stat_amount'].sum().reset_index()
     result = result[result['hero'] != 'All Heroes']
     result = result.sort_values(by='stat_amount', ascending=False)
     result = result.set_index('hero')
-    
+
     # Rename the columns
     result.rename(columns={'role': 'Role', 'stat': 'Stat', 'stat_amount': stat}, inplace=True)
     result.index.name = 'Hero'
-    
+
     return result
 
 
-# %% owl.ipynb 71
+# %% owl.ipynb 73
 def get_players_stat(stat: str) -> pd.DataFrame:
     """
     This function calculates the total amount of a specific statistic for each player in the dataset.
@@ -437,7 +461,8 @@ def get_players_stat(stat: str) -> pd.DataFrame:
 
     return result
 
-# %% owl.ipynb 73
+
+# %% owl.ipynb 75
 def avg_stats_per_game(stat: str, player: str) -> pd.DataFrame:
     """
     This function calculates the average amount of a specific statistic per game for a specific player.
@@ -469,7 +494,8 @@ def avg_stats_per_game(stat: str, player: str) -> pd.DataFrame:
 
     return results[['Hero', 'Avg per game', 'Number of game']]
 
-# %% owl.ipynb 74
+
+# %% owl.ipynb 76
 def get_teams_leaderboard(stage=None):
     """
     This function calculates the win rate for each team in the dataset, optionally for a specific stage.
@@ -527,10 +553,11 @@ def get_teams_leaderboard(stage=None):
 
     # Sort the DataFrame by win rate in descending order
     winrates_df = winrates_df.sort_values('Winrate', ascending=False)
-    
+
     return winrates_df
 
-# %% owl.ipynb 76
+
+# %% owl.ipynb 78
 def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
     """
     This function calculates the total amount of a specific statistic for each hero played by a specific player.
@@ -560,7 +587,8 @@ def get_heroes_stat_by_player(stat: str, player: str) -> pd.Series:
 
     return result
 
-# %% owl.ipynb 79
+
+# %% owl.ipynb 81
 def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
     """
     This function calculates the total amount of a specific statistic for each player in a specific team.
@@ -583,7 +611,8 @@ def get_players_stat_by_team(stat: str, team: str) -> pd.DataFrame:
 
     return result
 
-# %% owl.ipynb 81
+
+# %% owl.ipynb 83
 def get_team_scores(team: str, map_type: str = None, map_name: str = None) -> pd.DataFrame:
     """
     This function generates a DataFrame containing the scores of a specific team, optionally filtered by map type and map name.
@@ -661,3 +690,12 @@ def get_team_scores(team: str, map_type: str = None, map_name: str = None) -> pd
 
     results = results.set_index('Team')
     return results
+
+
+# %% owl.ipynb 84
+def get_switches() -> pd.DataFrame:
+    """
+    This function returns a DataFrame containing the switches made by players during matches.
+    """
+    result = df_switch
+    return result
