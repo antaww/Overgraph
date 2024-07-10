@@ -252,7 +252,6 @@ try:
                 showlegend=True
             )
             st.plotly_chart(fig, use_container_width=True)
-            # display the switch
             st.markdown("___")
             st.subheader(f'Switches for {maps[i]}')
             st.write('This part will show the switches that occured during the match on this map.')
@@ -279,7 +278,7 @@ try:
                 html_content += f"<div style='display: flex; flex-direction: column; align-items: center;'><p>{row['player']}</p>"
                 with open(f'src/static/{row["img"]}.png', 'rb') as f:
                     img = base64.b64encode(f.read()).decode()
-                html_content += f"<img src='data:image/png;base64,{img}' width='50' height='50'></div>"
+                html_content += f"<img src='data:image/png;base64,{img}' width='50' height='50'><p style='font-style: italic;'>{row['hero']}</p></div>"
             html_content += """
                 </div>
                 <h3>San Francisco Shock</h3>
@@ -289,7 +288,48 @@ try:
                 html_content += f"<div style='display: flex; flex-direction: column; align-items: center;'><p>{row['player']}</p>"
                 with open(f'src/static/{row["img"]}.png', 'rb') as f:
                     img = base64.b64encode(f.read()).decode()
-                html_content += f"<img src='data:image/png;base64,{img}' width='50' height='50'></div>"
+                html_content += f"<img src='data:image/png;base64,{img}' width='50' height='50'><p style='font-style: italic;'>{row['hero']}</p></div>"
+
+            switches_map = switches[switches['map'] == maps[i]]
+            switches_map = switches_map[switches_map['player'].map(switches_map['player'].value_counts()) > 1]
+            switches_map = switches_map[switches_map['timing'] != "0"]
+            switches_map['hero_img'] = switches_map['hero'].str.lower().str.replace('.', '').str.replace('ú',
+                                                                                                         'u').str.replace(
+                ' ', '').str.replace(':', '')
+            switches_map['from_img'] = switches_map['from'].str.lower().str.replace('.', '').str.replace('ú',
+                                                                                                         'u').str.replace(
+                ' ', '').str.replace(':', '')
+            # order it by timing
+            switches_map = switches_map.sort_values(by=['timing'])
+
+            html_content += """
+                </div>
+            </div>
+            <div>
+                <h3>Switches</h3>
+                <div class="switches" style="display: flex; gap: 1rem; flex-direction: column;">
+            """
+            for index, row in switches_map.iterrows():
+                html_content += (f"<div style='display: flex; flex-direction: row; align-items: center; gap: 1rem;'>"
+                                 f"<p style='font-style: bold;'>{row['timing']}</p>")
+                with open(f'src/static/{row['from_img']}.png', 'rb') as f:
+                    from_img = base64.b64encode(f.read()).decode()
+                html_content += (f"<div style='display: flex; flex-direction: column; align-items: center;'>"
+                                 f"<p style='margin: 0;'>{row['player']}</p>"
+                                 f"<img src='data:image/png;base64,{from_img}' width='50' height='50'>"
+                                 f"<p style='font-style: italic;'>{row['from']}</p>"
+                                 f"</div>")
+                with open(f'src/static/arrow.png', 'rb') as f:
+                    arrow = base64.b64encode(f.read()).decode()
+                html_content += f"<img src='data:image/png;base64,{arrow}' width='50' height='50'>"
+                with open(f'src/static/{row["hero_img"]}.png', 'rb') as f:
+                    hero_img = base64.b64encode(f.read()).decode()
+                html_content += (f"<div style='display: flex; flex-direction: column; align-items: center;'>"
+                                 f"<p style='margin: 0;'>{row['player']}</p>"
+                                 f"<img src='data:image/png;base64,{hero_img}' width='50' height='50'>"
+                                 f"<p style='font-style: italic;'>{row['hero']}</p>"
+                                 f"</div>")
+                html_content += "</div>"
             html_content += """
                 </div>
             </div>
