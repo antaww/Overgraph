@@ -271,7 +271,7 @@ try:
             # Utilisation de HTML dans Streamlit
             html_content = """
             <div>
-                <h3>Los Angeles Valiant</h3>
+                <h3>Start composition for Los Angeles Valiant</h3>
                 <div class="team" style="display: flex; gap: 2rem;">
             """
             for index, row in first_team_fc.iterrows():
@@ -281,7 +281,7 @@ try:
                 html_content += f"<img src='data:image/png;base64,{img}' width='50' height='50'><p style='font-style: italic;'>{row['hero']}</p></div>"
             html_content += """
                 </div>
-                <h3>San Francisco Shock</h3>
+                <h3>Start composition for San Francisco Shock</h3>
                 <div class="team" style="display: flex; gap: 2rem;">
             """
             for index, row in second_team_fc.iterrows():
@@ -319,9 +319,14 @@ try:
                                  f"<img src='data:image/png;base64,{from_img}' width='50' height='50'>"
                                  f"<p style='font-style: italic;'>{row['from']}</p>"
                                  f"</div>")
-                with open(f'src/static/arrow.png', 'rb') as f:
-                    arrow = base64.b64encode(f.read()).decode()
+                if row['team'] == 'Los Angeles Valiant':
+                    with open(f'src/static/arrowblue.png', 'rb') as f:
+                        arrow = base64.b64encode(f.read()).decode()
+                else:
+                    with open(f'src/static/arrowred.png', 'rb') as f:
+                        arrow = base64.b64encode(f.read()).decode()
                 html_content += f"<img src='data:image/png;base64,{arrow}' width='50' height='50'>"
+
                 with open(f'src/static/{row["hero_img"]}.png', 'rb') as f:
                     hero_img = base64.b64encode(f.read()).decode()
                 html_content += (f"<div style='display: flex; flex-direction: column; align-items: center;'>"
