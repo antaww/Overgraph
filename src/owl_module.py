@@ -84,10 +84,10 @@ datas = {
     # Google Docs
     # phs_2023.csv
     'phs_2023.csv': '1fKsztKPxxDbBdmLLH0WCV_GUsFcJhBph',
-    # https://drive.google.com/file/d/1peF54UifbGSN9skYG2Ky2k7lMyUgIPO3/view?usp=sharing
+    # https://drive.google.com/file/d/1TicwMNWetiVQy6doystaIp0zjL8eLfR4/view?usp=sharing
     # Google Docs
     # switch.csv
-    'switch.csv': '1peF54UifbGSN9skYG2Ky2k7lMyUgIPO3'
+    'switch.csv': '1TicwMNWetiVQy6doystaIp0zjL8eLfR4'
 }
 
 url = 'https://drive.google.com/uc?export=download&id=%s'
