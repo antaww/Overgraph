@@ -50,6 +50,7 @@ st.markdown("""
             ##### 📈 **Team profile** : Get a profile for a team\n
             ##### 🤺 **Match analysis** : Get specific stats for a match\n
             ##### 🏆 **Teams leaderboard** : Get the leaderboard of the teams\n
+            ##### ⏲️ **Switch analysis** : Get the switches of a match\n
 
             ###### *👀 Pssst, you better use the sidebar to navigate through the app, it's easier!*
             ___
