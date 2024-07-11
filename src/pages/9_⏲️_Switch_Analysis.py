@@ -299,7 +299,6 @@ try:
             switches_map['from_img'] = switches_map['from'].str.lower().str.replace('.', '').str.replace('ú',
                                                                                                          'u').str.replace(
                 ' ', '').str.replace(':', '')
-            # order it by timing
             switches_map = switches_map.sort_values(by=['timing'])
 
             html_content += """
@@ -312,7 +311,7 @@ try:
             for index, row in switches_map.iterrows():
                 html_content += (f"<div style='display: flex; flex-direction: row; align-items: center; gap: 1rem;'>"
                                  f"<p style='font-style: bold;'>{row['timing']}</p>")
-                with open(f'src/static/{row['from_img']}.png', 'rb') as f:
+                with open(f'src/static/{row["from_img"]}.png', 'rb') as f:
                     from_img = base64.b64encode(f.read()).decode()
                 html_content += (f"<div style='display: flex; flex-direction: column; align-items: center;'>"
                                  f"<p style='margin: 0;'>{row['player']}</p>"
